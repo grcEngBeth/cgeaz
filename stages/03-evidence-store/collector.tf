@@ -62,12 +62,20 @@ resource "azurerm_role_assignment" "collector_security_reader" {
   principal_id         = azurerm_linux_function_app.collectors.identity[0].principal_id
 }
 
-# Cosmos data-plane write. "Cosmos DB Built-in Data Contributor" (00000000-0000-0000-0000-000000000002)
-# is a Cosmos-native data-plane role, not an ARM role — control plane vs data plane, again.
+# Cosmos data-plane write for the collector identity.
+# Role: "Cosmos DB Built-in Data Contributor" (00000000-0000-0000-0000-000000000002), a
+# Cosmos-native data-plane role, not an ARM role — control plane vs data plane, again.
+#
+# Scope: deliberately narrowed from the account (reference build) to the `assessments`
+# container. The collector writes nothing else — function_app.py only calls
+# get_container_client("assessments") — so it has no business in `frameworks` or `mappings`.
+# Account scope would let the identity that produces findings also rewrite the crosswalk
+# that decides which controls those findings satisfy. Separation of duties, enforced by
+# role scope rather than by convention.
 resource "azurerm_cosmosdb_sql_role_assignment" "collector_cosmos_write" {
   resource_group_name = local.evidence_rg
   account_name        = azurerm_cosmosdb_account.evidence.name
   role_definition_id  = "${azurerm_cosmosdb_account.evidence.id}/sqlRoleDefinitions/00000000-0000-0000-0000-000000000002"
   principal_id        = azurerm_linux_function_app.collectors.identity[0].principal_id
-  scope               = azurerm_cosmosdb_account.evidence.id
+  scope               = "${azurerm_cosmosdb_account.evidence.id}/dbs/${azurerm_cosmosdb_sql_database.grc.name}/colls/${azurerm_cosmosdb_sql_container.assessments.name}"
 }
