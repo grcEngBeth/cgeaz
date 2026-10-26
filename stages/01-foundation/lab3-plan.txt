@@ -1,0 +1,370 @@
+Acquiring state lock. This may take a few moments...
+data.azurerm_subscription.current: Reading...
+azurerm_management_group.grc: Refreshing state... [id=/providers/Microsoft.Management/managementGroups/mg-grc]
+azurerm_resource_group.sandbox: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-sandbox-dev]
+data.azurerm_subscription.current: Read complete after 0s [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee]
+azurerm_management_group.sandbox: Refreshing state... [id=/providers/Microsoft.Management/managementGroups/mg-grc-sandbox]
+azurerm_log_analytics_workspace.grc: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-sandbox-dev/providers/Microsoft.OperationalInsights/workspaces/law-grc-sandbox]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # azurerm_log_analytics_workspace.grc will be updated in-place
+  ~ resource "azurerm_log_analytics_workspace" "grc" {
+        id                                      = "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-sandbox-dev/providers/Microsoft.OperationalInsights/workspaces/law-grc-sandbox"
+      + local_authentication_enabled            = true
+        name                                    = "law-grc-sandbox"
+      ~ tags                                    = {
+          + "env"     = "dev"
+          + "purpose" = "cge-az-labs"
+        }
+        # (14 unchanged attributes hidden)
+    }
+
+  # azurerm_management_group_policy_assignment.grc_baseline will be created
+  + resource "azurerm_management_group_policy_assignment" "grc_baseline" {
+      + display_name         = "CGE-AZ GRC Baseline"
+      + enforce              = true
+      + id                   = (known after apply)
+      + location             = "eastus"
+      + management_group_id  = "/providers/Microsoft.Management/managementGroups/mg-grc-sandbox"
+      + metadata             = (known after apply)
+      + name                 = "cge-grc-baseline"
+      + parameters           = jsonencode(
+            {
+              + publicBlobEffect = {
+                  + value = "Deny"
+                }
+              + tagEffect        = {
+                  + value = "Audit"
+                }
+              + workspaceId      = {
+                  + value = "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-sandbox-dev/providers/Microsoft.OperationalInsights/workspaces/law-grc-sandbox"
+                }
+            }
+        )
+      + policy_definition_id = (known after apply)
+
+      + identity {
+          + identity_ids = (known after apply)
+          + principal_id = (known after apply)
+          + tenant_id    = (known after apply)
+          + type         = "UserAssigned"
+        }
+    }
+
+  # azurerm_management_group_policy_set_definition.grc_baseline will be created
+  + resource "azurerm_management_group_policy_set_definition" "grc_baseline" {
+      + display_name        = "CGE-AZ GRC Baseline"
+      + id                  = (known after apply)
+      + management_group_id = "/providers/Microsoft.Management/managementGroups/mg-grc-sandbox"
+      + metadata            = (known after apply)
+      + name                = "cge-grc-baseline"
+      + parameters          = jsonencode(
+            {
+              + publicBlobEffect = {
+                  + defaultValue = "Deny"
+                  + type         = "String"
+                }
+              + tagEffect        = {
+                  + defaultValue = "Audit"
+                  + type         = "String"
+                }
+              + workspaceId      = {
+                  + type = "String"
+                }
+            }
+        )
+      + policy_type         = "Custom"
+
+      + policy_definition_reference {
+          + parameter_values     = jsonencode(
+                {
+                  + effect = {
+                      + value = "[parameters('tagEffect')]"
+                    }
+                }
+            )
+          + policy_definition_id = (known after apply)
+          + reference_id         = (known after apply)
+          + version              = (known after apply)
+        }
+      + policy_definition_reference {
+          + parameter_values     = jsonencode(
+                {
+                  + effect = {
+                      + value = "[parameters('publicBlobEffect')]"
+                    }
+                }
+            )
+          + policy_definition_id = (known after apply)
+          + reference_id         = (known after apply)
+          + version              = (known after apply)
+        }
+      + policy_definition_reference {
+          + parameter_values     = jsonencode(
+                {
+                  + workspaceId = {
+                      + value = "[parameters('workspaceId')]"
+                    }
+                }
+            )
+          + policy_definition_id = (known after apply)
+          + reference_id         = (known after apply)
+          + version              = (known after apply)
+        }
+    }
+
+  # azurerm_policy_definition.deny_public_blob will be created
+  + resource "azurerm_policy_definition" "deny_public_blob" {
+      + display_name        = "Storage accounts must not allow public blob access"
+      + id                  = (known after apply)
+      + management_group_id = "/providers/Microsoft.Management/managementGroups/mg-grc-sandbox"
+      + metadata            = (known after apply)
+      + mode                = "Indexed"
+      + name                = "cge-deny-public-blob"
+      + parameters          = jsonencode(
+            {
+              + effect = {
+                  + allowedValues = [
+                      + "Audit",
+                      + "Deny",
+                      + "Disabled",
+                    ]
+                  + defaultValue  = "Deny"
+                  + type          = "String"
+                }
+            }
+        )
+      + policy_rule         = jsonencode(
+            {
+              + if   = {
+                  + allOf = [
+                      + {
+                          + equals = "Microsoft.Storage/storageAccounts"
+                          + field  = "type"
+                        },
+                      + {
+                          + equals = "true"
+                          + field  = "Microsoft.Storage/storageAccounts/allowBlobPublicAccess"
+                        },
+                    ]
+                }
+              + then = {
+                  + effect = "[parameters('effect')]"
+                }
+            }
+        )
+      + policy_type         = "Custom"
+      + role_definition_ids = (known after apply)
+    }
+
+  # azurerm_policy_definition.require_env_tag will be created
+  + resource "azurerm_policy_definition" "require_env_tag" {
+      + display_name        = "Resource groups must carry an env tag"
+      + id                  = (known after apply)
+      + management_group_id = "/providers/Microsoft.Management/managementGroups/mg-grc-sandbox"
+      + metadata            = (known after apply)
+      + mode                = "All"
+      + name                = "cge-require-env-tag-rg"
+      + parameters          = jsonencode(
+            {
+              + effect = {
+                  + allowedValues = [
+                      + "Audit",
+                      + "Deny",
+                      + "Disabled",
+                    ]
+                  + defaultValue  = "Audit"
+                  + type          = "String"
+                }
+            }
+        )
+      + policy_rule         = jsonencode(
+            {
+              + if   = {
+                  + allOf = [
+                      + {
+                          + equals = "Microsoft.Resources/subscriptions/resourceGroups"
+                          + field  = "type"
+                        },
+                      + {
+                          + exists = "false"
+                          + field  = "tags['env']"
+                        },
+                    ]
+                }
+              + then = {
+                  + effect = "[parameters('effect')]"
+                }
+            }
+        )
+      + policy_type         = "Custom"
+      + role_definition_ids = (known after apply)
+    }
+
+  # azurerm_policy_definition.storage_diagnostics will be created
+  + resource "azurerm_policy_definition" "storage_diagnostics" {
+      + display_name        = "Storage accounts must route diagnostics to the GRC workspace"
+      + id                  = (known after apply)
+      + management_group_id = "/providers/Microsoft.Management/managementGroups/mg-grc-sandbox"
+      + metadata            = (known after apply)
+      + mode                = "Indexed"
+      + name                = "cge-dine-storage-diagnostics"
+      + parameters          = jsonencode(
+            {
+              + workspaceId = {
+                  + metadata = {
+                      + displayName = "Log Analytics workspace resource ID"
+                    }
+                  + type     = "String"
+                }
+            }
+        )
+      + policy_rule         = jsonencode(
+            {
+              + if   = {
+                  + equals = "Microsoft.Storage/storageAccounts"
+                  + field  = "type"
+                }
+              + then = {
+                  + details = {
+                      + deployment         = {
+                          + properties = {
+                              + mode       = "incremental"
+                              + parameters = {
+                                  + location     = {
+                                      + value = "[field('location')]"
+                                    }
+                                  + resourceName = {
+                                      + value = "[field('name')]"
+                                    }
+                                  + workspaceId  = {
+                                      + value = "[parameters('workspaceId')]"
+                                    }
+                                }
+                              + template   = {
+                                  + "$schema"      = "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#"
+                                  + contentVersion = "1.0.0.0"
+                                  + parameters     = {
+                                      + location     = {
+                                          + type = "string"
+                                        }
+                                      + resourceName = {
+                                          + type = "string"
+                                        }
+                                      + workspaceId  = {
+                                          + type = "string"
+                                        }
+                                    }
+                                  + resources      = [
+                                      + {
+                                          + apiVersion = "2021-05-01-preview"
+                                          + name       = "[concat(parameters('resourceName'), '/Microsoft.Insights/ds-to-grc-workspace')]"
+                                          + properties = {
+                                              + metrics     = [
+                                                  + {
+                                                      + category = "Transaction"
+                                                      + enabled  = true
+                                                    },
+                                                ]
+                                              + workspaceId = "[parameters('workspaceId')]"
+                                            }
+                                          + type       = "Microsoft.Storage/storageAccounts/providers/diagnosticSettings"
+                                        },
+                                    ]
+                                }
+                            }
+                        }
+                      + existenceCondition = {
+                          + allOf = [
+                              + {
+                                  + equals = "[parameters('workspaceId')]"
+                                  + field  = "Microsoft.Insights/diagnosticSettings/workspaceId"
+                                },
+                            ]
+                        }
+                      + roleDefinitionIds  = [
+                          + "/providers/Microsoft.Authorization/roleDefinitions/749f88d5-cbae-40b8-bcfc-e573ddc772fa",
+                        ]
+                      + type               = "Microsoft.Insights/diagnosticSettings"
+                    }
+                  + effect  = "DeployIfNotExists"
+                }
+            }
+        )
+      + policy_type         = "Custom"
+      + role_definition_ids = (known after apply)
+    }
+
+  # azurerm_resource_group.evidence will be created
+  + resource "azurerm_resource_group" "evidence" {
+      + id       = (known after apply)
+      + location = "eastus"
+      + name     = "rg-grc-evidence-dev"
+      + tags     = {
+          + "env"     = "dev"
+          + "owner"   = "[redacted-owner-email]"
+          + "purpose" = "grc-evidence-plane"
+        }
+    }
+
+  # azurerm_resource_group.sandbox will be updated in-place
+  ~ resource "azurerm_resource_group" "sandbox" {
+        id         = "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-sandbox-dev"
+        name       = "rg-grc-sandbox-dev"
+      ~ tags       = {
+            "env"       = "dev"
+          - "lastcheck" = "20261026T134513Z" -> null
+            "owner"     = "[redacted-owner-email]"
+            "purpose"   = "cge-az-labs"
+        }
+        # (2 unchanged attributes hidden)
+    }
+
+  # azurerm_role_assignment.remediation_monitoring will be created
+  + resource "azurerm_role_assignment" "remediation_monitoring" {
+      + condition_version                = (known after apply)
+      + id                               = (known after apply)
+      + name                             = (known after apply)
+      + principal_id                     = (known after apply)
+      + principal_type                   = (known after apply)
+      + role_definition_id               = (known after apply)
+      + role_definition_name             = "Monitoring Contributor"
+      + scope                            = "/providers/Microsoft.Management/managementGroups/mg-grc-sandbox"
+      + skip_service_principal_aad_check = (known after apply)
+    }
+
+  # azurerm_user_assigned_identity.remediation will be created
+  + resource "azurerm_user_assigned_identity" "remediation" {
+      + client_id           = (known after apply)
+      + id                  = (known after apply)
+      + location            = "eastus"
+      + name                = "id-grc-remediation-dev"
+      + principal_id        = (known after apply)
+      + resource_group_name = "rg-grc-sandbox-dev"
+      + tags                = {
+          + "env"     = "dev"
+          + "purpose" = "policy-remediation"
+        }
+      + tenant_id           = (known after apply)
+    }
+
+Plan: 8 to add, 2 to change, 0 to destroy.
+
+Changes to Outputs:
+  + evidence_resource_group_name      = "rg-grc-evidence-dev"
+  + remediation_identity_id           = (known after apply)
+  + remediation_identity_principal_id = (known after apply)
+
+─────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: lab3.tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "lab3.tfplan"
+Releasing state lock. This may take a few moments...

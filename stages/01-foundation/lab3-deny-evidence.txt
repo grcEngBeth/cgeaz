@@ -1,0 +1,50 @@
+ERROR: (RequestDisallowedByPolicy) Resource 'stgrcdenytest10136' was disallowed by policy. Policy identifiers: '[{"policyAssignment":{"name":"CGE-AZ GRC Baseline","id":"/providers/Microsoft.Management/managementGroups/mg-grc-sandbox/providers/Microsoft.Authorization/policyAssignments/cge-grc-baseline"},"policyDefinition":{"name":"Storage accounts must not allow public blob access","id":"/providers/Microsoft.Management/managementGroups/mg-grc-sandbox/providers/Microsoft.Authorization/policyDefinitions/cge-deny-public-blob","version":"1.0.0"},"policySetDefinition":{"name":"CGE-AZ GRC Baseline","id":"/providers/Microsoft.Management/managementGroups/mg-grc-sandbox/providers/Microsoft.Authorization/policySetDefinitions/cge-grc-baseline","version":"1.0.0"}}]'.
+Code: RequestDisallowedByPolicy
+Message: Resource 'stgrcdenytest10136' was disallowed by policy. Policy identifiers: '[{"policyAssignment":{"name":"CGE-AZ GRC Baseline","id":"/providers/Microsoft.Management/managementGroups/mg-grc-sandbox/providers/Microsoft.Authorization/policyAssignments/cge-grc-baseline"},"policyDefinition":{"name":"Storage accounts must not allow public blob access","id":"/providers/Microsoft.Management/managementGroups/mg-grc-sandbox/providers/Microsoft.Authorization/policyDefinitions/cge-deny-public-blob","version":"1.0.0"},"policySetDefinition":{"name":"CGE-AZ GRC Baseline","id":"/providers/Microsoft.Management/managementGroups/mg-grc-sandbox/providers/Microsoft.Authorization/policySetDefinitions/cge-grc-baseline","version":"1.0.0"}}]'.
+Target: stgrcdenytest10136
+Additional Information:Type: PolicyViolation
+Info: {
+    "evaluationDetails": {
+        "evaluatedExpressions": [
+            {
+                "result": "True",
+                "expressionKind": "Field",
+                "expression": "type",
+                "path": "type",
+                "expressionValue": "Microsoft.Storage/storageAccounts",
+                "targetValue": "Microsoft.Storage/storageAccounts",
+                "operator": "Equals"
+            },
+            {
+                "result": "True",
+                "expressionKind": "Field",
+                "expression": "Microsoft.Storage/storageAccounts/allowBlobPublicAccess",
+                "path": "properties.allowBlobPublicAccess",
+                "expressionValue": true,
+                "targetValue": "true",
+                "operator": "Equals"
+            }
+        ]
+    },
+    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/mg-grc-sandbox/providers/Microsoft.Authorization/policyDefinitions/cge-deny-public-blob",
+    "policySetDefinitionId": "/providers/Microsoft.Management/managementGroups/mg-grc-sandbox/providers/Microsoft.Authorization/policySetDefinitions/cge-grc-baseline",
+    "policyDefinitionReferenceId": "9276338216145571603",
+    "policySetDefinitionName": "cge-grc-baseline",
+    "policySetDefinitionDisplayName": "CGE-AZ GRC Baseline",
+    "policySetDefinitionVersion": "1.0.0",
+    "policyDefinitionName": "cge-deny-public-blob",
+    "policyDefinitionDisplayName": "Storage accounts must not allow public blob access",
+    "policyDefinitionVersion": "1.0.0",
+    "policyDefinitionEffect": "Deny",
+    "policyAssignmentId": "/providers/Microsoft.Management/managementGroups/mg-grc-sandbox/providers/Microsoft.Authorization/policyAssignments/cge-grc-baseline",
+    "policyAssignmentName": "cge-grc-baseline",
+    "policyAssignmentDisplayName": "CGE-AZ GRC Baseline",
+    "policyAssignmentScope": "/providers/Microsoft.Management/managementGroups/mg-grc-sandbox",
+    "policyAssignmentParameters": {
+        "publicBlobEffect": "Deny",
+        "tagEffect": "Audit",
+        "workspaceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-sandbox-dev/providers/Microsoft.OperationalInsights/workspaces/law-grc-sandbox"
+    },
+    "policyExemptionIds": [],
+    "policyEnrollmentIds": []
+}
