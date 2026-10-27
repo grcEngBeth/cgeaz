@@ -1,0 +1,24 @@
+# Lab 4 trace — 2026-10-27T21:15:56Z — assessment ad4f3ff1-30eb-5042-16ed-27198f640b8d on stgrcseed18321
+## Defender (live view)
+[
+  {
+    "key": "ad4f3ff1-30eb-5042-16ed-27198f640b8d",
+    "resource": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-sandbox-dev/providers/microsoft.storage/storageaccounts/stgrcseed18321",
+    "status": "Unhealthy",
+    "title": "Storage accounts should restrict network access using virtual network rules"
+  }
+]
+## Evidence store (owned history)
+{
+  "id": "b32fd21d99d976e054b55daa8c9cc9fc",
+  "subscriptionId": "4211551c-4854-4720-a8c5-d1f3ebcbd9ee",
+  "assessmentId": "ad4f3ff1-30eb-5042-16ed-27198f640b8d",
+  "displayName": "Storage accounts should restrict network access using virtual network rules",
+  "status": "Unhealthy",
+  "statusCause": null,
+  "severity": null,
+  "categories": null,
+  "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-sandbox-dev/providers/microsoft.storage/storageaccounts/stgrcseed18321",
+  "collectedAt": "2026-10-27T21:12:57.459143+00:00",
+  "runId": "c85bf024-f5d5-40bc-bb22-25531c7ff2dc"
+}

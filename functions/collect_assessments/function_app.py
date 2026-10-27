@@ -45,6 +45,9 @@ def _collect() -> dict:
     url = (
         f"{ARM}/subscriptions/{subscription_id}"
         f"/providers/Microsoft.Security/assessments?api-version={API_VERSION}"
+        # $expand=metadata: without it the list API omits severity/categories and every
+        # document lands with severity null (found tracing ad4f3ff1 in Lab 4).
+        "&$expand=metadata"
     )
     written = 0
     while url:
