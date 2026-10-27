@@ -1,0 +1,10 @@
+# Lab 4 WORM proof — 2026-10-27T21:24:08Z
+{
+  "days": 90,
+  "state": "Unlocked"
+}
+## Delete attempt (expected to FAIL)
+ERROR: This operation is not permitted as the blob is immutable due to a policy.
+RequestId:048af268-201e-0044-1459-666f1c000000
+Time:2026-10-27T21:24:12.1155308Z
+ErrorCode:BlobImmutableDueToPolicy
