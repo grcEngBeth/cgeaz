@@ -30,6 +30,7 @@ jobs:
     if: ${{ vars.AZURE_CLIENT_ID != '' }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         stage: [01-foundation, 03-evidence-store, 04-reporting, 06-enforcement]
     steps:
