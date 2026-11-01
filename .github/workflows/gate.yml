@@ -53,7 +53,4 @@ jobs:
           terraform show -json tf.plan > plan.json
 
       - name: OPA gate (conftest)
-        uses: instrumenta/conftest-action@master
-        with:
-          files: stages/${{ matrix.stage }}/plan.json
-          policy: policy
+        run: docker run --rm -v "$PWD:/project" -w /project openpolicyagent/conftest test stages/${{ matrix.stage }}/plan.json -p policy
