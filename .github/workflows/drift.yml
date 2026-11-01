@@ -51,7 +51,7 @@ jobs:
         working-directory: stages/${{ matrix.stage }}
         continue-on-error: true
         run: |
-          terraform init -input=false -backend-config=../../labs/03-foundation/backend.hcl
+          terraform init -input=false -backend-config=resource_group_name=rg-grc-tfstate -backend-config=storage_account_name=${{ vars.STATE_STORAGE_ACCOUNT }} -backend-config=container_name=tfstate
           terraform plan -input=false -detailed-exitcode -no-color -out=drift.plan \
             2>&1 | tee plan-output.txt
           echo "exitcode=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
