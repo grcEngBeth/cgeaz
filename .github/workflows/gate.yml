@@ -46,7 +46,7 @@ jobs:
       - name: terraform validate + plan
         working-directory: stages/${{ matrix.stage }}
         run: |
-          terraform init -input=false -backend-config=../../labs/03-foundation/backend.hcl
+          terraform init -input=false -backend-config=resource_group_name=rg-grc-tfstate -backend-config=storage_account_name=${{ vars.STATE_STORAGE_ACCOUNT }} -backend-config=container_name=tfstate
           terraform validate
           terraform plan -input=false -out=tf.plan
           terraform show -json tf.plan > plan.json
