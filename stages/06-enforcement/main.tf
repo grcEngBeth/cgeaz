@@ -64,8 +64,8 @@ resource "azurerm_policy_definition" "fix_public_blob" {
       effect = local.effect == "Audit" ? "Audit" : "Modify"
       details = local.effect == "Audit" ? null : {
         roleDefinitionIds = [
-          # Storage Account Contributor — the narrowest built-in that can write this property
-          "/providers/Microsoft.Authorization/roleDefinitions/17d1049b-9a84-46fb-8f53-869881c3d3ab"
+          # Custom role cge-remediation-storage-writer: storageAccounts read/write only
+          "/providers/Microsoft.Authorization/roleDefinitions/${azurerm_role_definition.remediation_storage.role_definition_id}"
         ]
         conflictEffect = "audit"
         operations = [
@@ -91,11 +91,34 @@ resource "azurerm_management_group_policy_assignment" "fix_public_blob" {
 }
 
 # The remediation identity earns the storage role only when remediation can actually run.
+# Custom role for the remediation identity, replacing Storage Account Contributor.
+# The modify effect only writes allowBlobPublicAccess, so the identity needs read and
+# write on storage accounts and nothing else: no delete, and no listKeys (listing keys
+# would hand it data-plane access to every account).
+# Blast radius: it can change storage account properties under this management group,
+# but cannot delete an account or read its data. Rollback: revert this commit and apply.
+resource "azurerm_role_definition" "remediation_storage" {
+  name        = "cge-remediation-storage-writer"
+  scope       = local.mg_id
+  description = "Remediation identity: read/write storage account properties only (no delete, no listKeys)."
+
+  permissions {
+    actions = [
+      "Microsoft.Storage/storageAccounts/read",
+      "Microsoft.Storage/storageAccounts/write",
+      "Microsoft.Resources/subscriptions/resourceGroups/read",
+    ]
+    not_actions = []
+  }
+
+  assignable_scopes = [local.mg_id]
+}
+
 resource "azurerm_role_assignment" "remediation_storage" {
-  count                = var.remediation_mode == "audit" ? 0 : 1
-  scope                = local.mg_id
-  role_definition_name = "Storage Account Contributor"
-  principal_id         = local.remediation_pid
+  count              = var.remediation_mode == "audit" ? 0 : 1
+  scope              = local.mg_id
+  role_definition_id = azurerm_role_definition.remediation_storage.role_definition_resource_id
+  principal_id       = local.remediation_pid
 }
 
 output "remediation_mode" {
