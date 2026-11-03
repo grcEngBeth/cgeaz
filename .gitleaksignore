@@ -1,0 +1,5 @@
+# Reviewed 2026-11-03: false positive. "key" is the Defender assessment GUID
+# (ad4f3ff1-30eb-5042-16ed-27198f640b8d), shown in the file's own header line.
+# It is a finding ID, not a credential. No secrets exist in this repo by design:
+# all pipeline auth is OIDC or managed identity.
+3b6f4aa486248624a4ef857d5e1f28359b99e5a6:labs/04-evidence/lab4-trace-evidence.txt:generic-api-key:5
