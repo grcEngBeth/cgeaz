@@ -1,0 +1,20 @@
+{
+  "Name": "cge-ci-planner",
+  "IsCustom": true,
+  "Description": "CGE-AZ CI plan identity: read everything, plus the list actions azurerm refresh needs. No writes, no RBAC.",
+  "Actions": [
+    "*/read",
+    "Microsoft.Storage/storageAccounts/listKeys/action",
+    "Microsoft.DocumentDB/databaseAccounts/listKeys/action",
+    "Microsoft.DocumentDB/databaseAccounts/readonlykeys/action",
+    "Microsoft.DocumentDB/databaseAccounts/listConnectionStrings/action",
+    "Microsoft.Web/sites/config/list/action",
+    "Microsoft.OperationalInsights/workspaces/sharedKeys/action"
+  ],
+  "NotActions": [],
+  "DataActions": [],
+  "NotDataActions": [],
+  "AssignableScopes": [
+    "/providers/Microsoft.Management/managementGroups/mg-grc"
+  ]
+}
