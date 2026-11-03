@@ -67,8 +67,19 @@ def _dated_path(prefix: str, ext: str) -> str:
     return f"{prefix}/{now:%Y/%m}/{prefix}-{now:%Y-%m-%d}.{ext}"
 
 
+def _already_written(blobs, path: str) -> bool:
+    """Reports are WORM and dated, so there is one per UTC day. A second run the same
+    day (a timer after a manual run, or a host retry) skips instead of failing."""
+    if blobs.get_blob_client(path).exists():
+        logging.info("Skip: %s already exists (WORM, one report per UTC day)", path)
+        return True
+    return False
+
+
 def generate_poam() -> dict:
     cosmos, blobs = _clients()
+    if _already_written(blobs, _dated_path("poam", "xlsx")):
+        return {"skipped": True, "path": _dated_path("poam", "xlsx")}
     run_id, collected_at = _latest_run(cosmos)
     findings = _unhealthy(cosmos, run_id) if run_id else []
     today = datetime.date.today()
@@ -113,6 +124,8 @@ def generate_poam() -> dict:
 
 def generate_sar() -> dict:
     cosmos, blobs = _clients()
+    if _already_written(blobs, _dated_path("sar", "md")):
+        return {"skipped": True, "path": _dated_path("sar", "md")}
     run_id, collected_at = _latest_run(cosmos)
     findings = _unhealthy(cosmos, run_id) if run_id else []
     by_severity = Counter(f.get("severity") or "Unknown" for f in findings)
