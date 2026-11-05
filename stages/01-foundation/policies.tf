@@ -1,4 +1,4 @@
-# Three policies, one initiative, assigned once at mg-grc-sandbox.
+# Four policies (the fourth is the capstone's own), one initiative, assigned once at mg-grc-sandbox.
 # Every subscription that ever joins the sandbox group inherits all of it. (CSF: GV.PO, PR.DS, PR.PS)
 
 # --- 1. Require the `env` tag on resource groups (inventory hygiene; POA&M owner resolution) ---
@@ -129,6 +129,38 @@ resource "azurerm_policy_definition" "storage_diagnostics" {
   })
 }
 
+# --- 4. Storage accounts must require secure transfer (own control, capstone; CSF: PR.DS-02) ---
+# New controls start in Audit; escalate via var.secure_transfer_policy_effect after review.
+# Blast radius at Deny: creating or updating a storage account with HTTPS-only off is refused.
+# Existing non-compliant accounts are reported, never changed. The gate rule
+# policy/transport.rego enforces the same control on this repo's own Terraform before merge.
+
+resource "azurerm_policy_definition" "require_secure_transfer" {
+  name                = "cge-require-secure-transfer"
+  display_name        = "Storage accounts must require secure transfer (HTTPS only)"
+  policy_type         = "Custom"
+  mode                = "Indexed"
+  management_group_id = azurerm_management_group.sandbox.id
+
+  parameters = jsonencode({
+    effect = {
+      type          = "String"
+      allowedValues = ["Audit", "Deny", "Disabled"]
+      defaultValue  = "Audit"
+    }
+  })
+
+  policy_rule = jsonencode({
+    if = {
+      allOf = [
+        { field = "type", equals = "Microsoft.Storage/storageAccounts" },
+        { field = "Microsoft.Storage/storageAccounts/supportsHttpsTrafficOnly", equals = "false" }
+      ]
+    }
+    then = { effect = "[parameters('effect')]" }
+  })
+}
+
 # --- The initiative: one assignment, whole-sandbox inheritance ---
 
 resource "azurerm_management_group_policy_set_definition" "grc_baseline" {
@@ -140,6 +172,7 @@ resource "azurerm_management_group_policy_set_definition" "grc_baseline" {
   parameters = jsonencode({
     tagEffect        = { type = "String", defaultValue = "Audit" }
     publicBlobEffect = { type = "String", defaultValue = "Deny" }
+    httpsEffect      = { type = "String", defaultValue = "Audit" }
     workspaceId      = { type = "String" }
   })
 
@@ -163,6 +196,13 @@ resource "azurerm_management_group_policy_set_definition" "grc_baseline" {
       workspaceId = { value = "[parameters('workspaceId')]" }
     })
   }
+
+  policy_definition_reference {
+    policy_definition_id = azurerm_policy_definition.require_secure_transfer.id
+    parameter_values = jsonencode({
+      effect = { value = "[parameters('httpsEffect')]" }
+    })
+  }
 }
 
 resource "azurerm_management_group_policy_assignment" "grc_baseline" {
@@ -175,6 +215,7 @@ resource "azurerm_management_group_policy_assignment" "grc_baseline" {
   parameters = jsonencode({
     tagEffect        = { value = var.tag_policy_effect }
     publicBlobEffect = { value = var.public_blob_policy_effect }
+    httpsEffect      = { value = var.secure_transfer_policy_effect }
     workspaceId      = { value = azurerm_log_analytics_workspace.grc.id }
   })
 

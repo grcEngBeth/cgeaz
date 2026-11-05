@@ -34,3 +34,13 @@ variable "public_blob_policy_effect" {
     error_message = "public_blob_policy_effect must be Audit, Deny, or Disabled."
   }
 }
+
+variable "secure_transfer_policy_effect" {
+  description = "Effect for the require-secure-transfer policy (capstone's own control). Audit until the estate is clean, then Deny after review."
+  type        = string
+  default     = "Audit"
+  validation {
+    condition     = contains(["Audit", "Deny", "Disabled"], var.secure_transfer_policy_effect)
+    error_message = "secure_transfer_policy_effect must be Audit, Deny, or Disabled."
+  }
+}
