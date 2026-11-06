@@ -58,6 +58,16 @@ resource "azurerm_cosmosdb_sql_container" "assessments" {
   partition_key_paths = ["/subscriptionId"]
 }
 
+# identities: one document per role assignment per run (capstone role-assignment collector).
+# Same partition key as assessments, so FAFO's other subscriptions partition the same way.
+resource "azurerm_cosmosdb_sql_container" "identities" {
+  name                = "identities"
+  resource_group_name = local.evidence_rg
+  account_name        = azurerm_cosmosdb_account.evidence.name
+  database_name       = azurerm_cosmosdb_sql_database.grc.name
+  partition_key_paths = ["/subscriptionId"]
+}
+
 # frameworks: CSF 2.0 / 800-53 catalogs as records we own.
 resource "azurerm_cosmosdb_sql_container" "frameworks" {
   name                = "frameworks"
