@@ -54,7 +54,7 @@ resource "azurerm_policy_definition" "fix_public_blob" {
   management_group_id = local.mg_id
 
   policy_rule = jsonencode({
-    if = {
+    "if" = {
       allOf = [
         { field = "type", equals = "Microsoft.Storage/storageAccounts" },
         { field = "Microsoft.Storage/storageAccounts/allowBlobPublicAccess", notEquals = "false" }

@@ -16,6 +16,10 @@ resource "random_string" "suffix" {
 # --- Cosmos DB: the evidence database we OWN. Serverless; pennies at lab scale. ---
 
 resource "azurerm_cosmosdb_account" "evidence" {
+  #checkov:skip=CKV_AZURE_140:local auth is off via local_authentication_enabled = false; checkov reads only the deprecated attribute
+  #checkov:skip=CKV_AZURE_99:Y1 Consumption plan cannot use VNet integration or private endpoints, so access is identity-only (documented in CONTROLS.md)
+  #checkov:skip=CKV_AZURE_101:Y1 Consumption plan cannot use VNet integration or private endpoints, so access is identity-only (documented in CONTROLS.md)
+  #checkov:skip=CKV_AZURE_100:Microsoft-managed keys; customer-managed keys need Key Vault and rotation, out of scope for the sandbox (documented)
   name                = "cosmos-grc-evidence-${random_string.suffix.result}"
   location            = var.location
   resource_group_name = local.evidence_rg
@@ -26,6 +30,9 @@ resource "azurerm_cosmosdb_account" "evidence" {
   # local_authentication_disabled was deprecated in favour of local_authentication_enabled
   # (removed in azurerm v5.0); the boolean inverts, so disabled=true becomes enabled=false.
   local_authentication_enabled = false
+
+  # Key-based clients cannot change databases or containers (CKV_AZURE_132).
+  access_key_metadata_writes_enabled = false
 
   capabilities {
     name = "EnableServerless"
@@ -89,6 +96,11 @@ resource "azurerm_cosmosdb_sql_container" "mappings" {
 # --- Evidence artifact storage: WORM reports container, zero shared keys. ---
 
 resource "azurerm_storage_account" "evidence" {
+  #checkov:skip=CKV_AZURE_33:no queues in the evidence account
+  #checkov:skip=CKV_AZURE_59:Y1 Consumption plan cannot use VNet integration or private endpoints, so access is identity-only (documented in CONTROLS.md)
+  #checkov:skip=CKV_AZURE_206:LRS in the sandbox; production evidence would use GRS (documented)
+  #checkov:skip=CKV2_AZURE_33:Y1 Consumption plan cannot use VNet integration or private endpoints, so access is identity-only (documented in CONTROLS.md)
+  #checkov:skip=CKV2_AZURE_1:Microsoft-managed keys; customer-managed keys need Key Vault and rotation, out of scope for the sandbox (documented)
   name                     = "stgrcevid${random_string.suffix.result}"
   resource_group_name      = local.evidence_rg
   location                 = var.location
@@ -102,12 +114,19 @@ resource "azurerm_storage_account" "evidence" {
 
   blob_properties {
     versioning_enabled = true
+    delete_retention_policy {
+      days = 7
+    }
+    container_delete_retention_policy {
+      days = 7
+    }
   }
 
   tags = local.common_tags
 }
 
 resource "azurerm_storage_container" "reports" {
+  #checkov:skip=CKV2_AZURE_21:blob read, write and delete logs go to law-grc-sandbox via azurerm_monitor_diagnostic_setting.evidence_blob_access; this check does not count diagnostic settings
   name               = "reports"
   storage_account_id = azurerm_storage_account.evidence.id
 }
@@ -146,4 +165,22 @@ resource "azurerm_cosmosdb_sql_role_assignment" "deployer_cosmos_write" {
   role_definition_id  = "${azurerm_cosmosdb_account.evidence.id}/sqlRoleDefinitions/00000000-0000-0000-0000-000000000002"
   principal_id        = local.deployer_principal_id
   scope               = azurerm_cosmosdb_account.evidence.id
+}
+
+# Who read, wrote or deleted evidence blobs (reports container), in the GRC workspace.
+# Blob-service level: the account-level setting from the DINE policy carries metrics only.
+resource "azurerm_monitor_diagnostic_setting" "evidence_blob_access" {
+  name                       = "evidence-blob-access"
+  target_resource_id         = "${azurerm_storage_account.evidence.id}/blobServices/default"
+  log_analytics_workspace_id = data.terraform_remote_state.foundation.outputs.log_analytics_workspace_id
+
+  enabled_log {
+    category = "StorageRead"
+  }
+  enabled_log {
+    category = "StorageWrite"
+  }
+  enabled_log {
+    category = "StorageDelete"
+  }
 }

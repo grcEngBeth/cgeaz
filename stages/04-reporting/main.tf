@@ -22,6 +22,12 @@ data "azurerm_storage_account" "evidence" {
 }
 
 resource "azurerm_storage_account" "func_internal" {
+  #checkov:skip=CKV_AZURE_33:queues here are internal to the Functions runtime and hold no evidence
+  #checkov:skip=CKV_AZURE_59:Y1 Consumption plan cannot use VNet integration or private endpoints, so access is identity-only (documented in CONTROLS.md)
+  #checkov:skip=CKV_AZURE_206:LRS in the sandbox; production evidence would use GRS (documented)
+  #checkov:skip=CKV2_AZURE_33:Y1 Consumption plan cannot use VNet integration or private endpoints, so access is identity-only (documented in CONTROLS.md)
+  #checkov:skip=CKV2_AZURE_40:Y1 Functions runtime requires shared-key storage; this account holds no evidence
+  #checkov:skip=CKV2_AZURE_1:Microsoft-managed keys; customer-managed keys need Key Vault and rotation, out of scope for the sandbox (documented)
   name                            = "stgrcrpt${random_string.suffix.result}"
   resource_group_name             = local.evidence_rg
   location                        = var.functions_location
@@ -29,10 +35,30 @@ resource "azurerm_storage_account" "func_internal" {
   account_replication_type        = "LRS"
   min_tls_version                 = "TLS1_2"
   allow_nested_items_to_be_public = false
-  tags                            = local.common_tags
+
+  # The Y1 Functions runtime connects with the account key (see the CKV2_AZURE_40 skip).
+  shared_access_key_enabled = true
+
+  sas_policy {
+    expiration_period = "01.00:00:00"
+    expiration_action = "Log"
+  }
+
+  blob_properties {
+    delete_retention_policy {
+      days = 7
+    }
+    container_delete_retention_policy {
+      days = 7
+    }
+  }
+
+  tags = local.common_tags
 }
 
 resource "azurerm_service_plan" "reporting" {
+  #checkov:skip=CKV_AZURE_225:zone redundancy is not available on the Y1 Consumption plan
+  #checkov:skip=CKV_AZURE_212:minimum instance count is not available on the Y1 Consumption plan
   name                = "asp-grc-reporting-${var.environment}"
   resource_group_name = local.evidence_rg
   location            = var.functions_location
@@ -42,6 +68,7 @@ resource "azurerm_service_plan" "reporting" {
 }
 
 resource "azurerm_linux_function_app" "reporting" {
+  #checkov:skip=CKV_AZURE_221:Y1 Consumption plan cannot use VNet integration or private endpoints, so access is identity-only (documented in CONTROLS.md)
   lifecycle {
     # config-zip deploys remove this setting; not a real change.
     ignore_changes = [app_settings["ENABLE_ORYX_BUILD"]]
