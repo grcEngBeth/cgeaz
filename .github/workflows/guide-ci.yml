@@ -45,7 +45,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        stage: [01-foundation, 03-evidence-store, 04-reporting, 06-enforcement]
+        stage: [01-foundation, 02-activation, 03-evidence-store, 04-reporting, 06-enforcement]
     steps:
       - uses: actions/checkout@v4
 
