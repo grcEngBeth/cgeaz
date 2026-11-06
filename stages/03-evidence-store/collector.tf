@@ -25,6 +25,11 @@ resource "azurerm_service_plan" "collectors" {
 }
 
 resource "azurerm_linux_function_app" "collectors" {
+  lifecycle {
+    # config-zip deploys remove this setting; not a real change.
+    ignore_changes = [app_settings["ENABLE_ORYX_BUILD"]]
+  }
+
   https_only                 = true # gate rule policy/transport.rego (PR.DS-02)
   name                       = "func-grc-collectors-${random_string.suffix.result}"
   resource_group_name        = local.evidence_rg

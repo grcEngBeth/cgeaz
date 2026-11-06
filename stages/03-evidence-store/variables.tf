@@ -32,3 +32,9 @@ variable "functions_location" {
   type        = string
   default     = "centralus"
 }
+
+variable "deployer_principal_id" {
+  description = "Object ID given deployer blob and Cosmos write access. Set in CI so plans do not depend on who runs them."
+  type        = string
+  default     = null
+}
