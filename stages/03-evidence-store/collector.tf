@@ -25,6 +25,7 @@ resource "azurerm_service_plan" "collectors" {
 }
 
 resource "azurerm_linux_function_app" "collectors" {
+  https_only                 = true # gate rule policy/transport.rego (PR.DS-02)
   name                       = "func-grc-collectors-${random_string.suffix.result}"
   resource_group_name        = local.evidence_rg
   location                   = var.functions_location
