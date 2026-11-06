@@ -68,8 +68,9 @@ resource "azurerm_role_assignment" "collector_security_reader" {
 # Cosmos-native data-plane role, not an ARM role — control plane vs data plane, again.
 #
 # Scope: deliberately narrowed from the account (reference build) to the `assessments`
-# container. The collector writes nothing else — function_app.py only calls
-# get_container_client("assessments") — so it has no business in `frameworks` or `mappings`.
+# container. The collector writes nothing else — function_app.py calls only
+# get_container_client("assessments") and ("identities"), each with its own grant below —
+# so it has no business in `frameworks` or `mappings`.
 # Account scope would let the identity that produces findings also rewrite the crosswalk
 # that decides which controls those findings satisfy. Separation of duties, enforced by
 # role scope rather than by convention.
@@ -79,4 +80,15 @@ resource "azurerm_cosmosdb_sql_role_assignment" "collector_cosmos_write" {
   role_definition_id  = "${azurerm_cosmosdb_account.evidence.id}/sqlRoleDefinitions/00000000-0000-0000-0000-000000000002"
   principal_id        = azurerm_linux_function_app.collectors.identity[0].principal_id
   scope               = "${azurerm_cosmosdb_account.evidence.id}/dbs/${azurerm_cosmosdb_sql_database.grc.name}/colls/${azurerm_cosmosdb_sql_container.assessments.name}"
+}
+
+# Same pattern for the role-assignment collector (capstone): write to `identities` only.
+# Reading role assignments needs no new ARM role: Security Reader above already grants
+# Microsoft.Authorization/*/read (checked with az role definition list, Nov 6 2026).
+resource "azurerm_cosmosdb_sql_role_assignment" "collector_cosmos_write_identities" {
+  resource_group_name = local.evidence_rg
+  account_name        = azurerm_cosmosdb_account.evidence.name
+  role_definition_id  = "${azurerm_cosmosdb_account.evidence.id}/sqlRoleDefinitions/00000000-0000-0000-0000-000000000002"
+  principal_id        = azurerm_linux_function_app.collectors.identity[0].principal_id
+  scope               = "${azurerm_cosmosdb_account.evidence.id}/dbs/${azurerm_cosmosdb_sql_database.grc.name}/colls/${azurerm_cosmosdb_sql_container.identities.name}"
 }
