@@ -42,6 +42,7 @@ resource "azurerm_service_plan" "reporting" {
 }
 
 resource "azurerm_linux_function_app" "reporting" {
+  https_only                 = true # gate rule policy/transport.rego (PR.DS-02)
   name                       = "func-grc-reporting-${random_string.suffix.result}"
   resource_group_name        = local.evidence_rg
   location                   = var.functions_location
