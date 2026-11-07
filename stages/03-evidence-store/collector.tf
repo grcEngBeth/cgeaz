@@ -50,6 +50,21 @@ resource "azurerm_service_plan" "collectors" {
   tags                = local.common_tags
 }
 
+# Run logs for the collector app. Before this, a failed run left no log (Lab 6: a poam_now
+# HTTP 500 could only be explained by inference). Workspace-based, so telemetry lands in
+# law-grc-sandbox with the rest of the program's logs.
+resource "azurerm_application_insights" "collectors" {
+  name                = "appi-grc-collectors-${random_string.suffix.result}"
+  location            = var.functions_location
+  resource_group_name = local.evidence_rg
+  workspace_id        = data.terraform_remote_state.foundation.outputs.log_analytics_workspace_id
+  application_type    = "web"
+  # Entra ID only: the instrumentation key alone cannot send telemetry. The app authenticates
+  # with its managed identity (APPLICATIONINSIGHTS_AUTHENTICATION_STRING below).
+  local_authentication_enabled = false
+  tags                         = local.common_tags
+}
+
 resource "azurerm_linux_function_app" "collectors" {
   #checkov:skip=CKV_AZURE_221:Y1 Consumption plan cannot use VNet integration or private endpoints, so access is identity-only (documented in CONTROLS.md)
   lifecycle {
@@ -73,17 +88,20 @@ resource "azurerm_linux_function_app" "collectors" {
   }
 
   site_config {
+    # Writes APPLICATIONINSIGHTS_CONNECTION_STRING; the value stays sensitive in state and plans.
+    application_insights_connection_string = azurerm_application_insights.collectors.connection_string
     application_stack {
       python_version = "3.11"
     }
   }
 
   app_settings = {
-    "COSMOS_ENDPOINT"                = azurerm_cosmosdb_account.evidence.endpoint
-    "COSMOS_DATABASE"                = azurerm_cosmosdb_sql_database.grc.name
-    "SUBSCRIPTION_ID"                = local.subscription
-    "SCM_DO_BUILD_DURING_DEPLOYMENT" = "true"
-    "ENABLE_ORYX_BUILD"              = "true"
+    "COSMOS_ENDPOINT"                           = azurerm_cosmosdb_account.evidence.endpoint
+    "COSMOS_DATABASE"                           = azurerm_cosmosdb_sql_database.grc.name
+    "SUBSCRIPTION_ID"                           = local.subscription
+    "APPLICATIONINSIGHTS_AUTHENTICATION_STRING" = "Authorization=AAD"
+    "SCM_DO_BUILD_DURING_DEPLOYMENT"            = "true"
+    "ENABLE_ORYX_BUILD"                         = "true"
   }
 
   tags = local.common_tags
@@ -126,4 +144,11 @@ resource "azurerm_cosmosdb_sql_role_assignment" "collector_cosmos_write_identiti
   role_definition_id  = "${azurerm_cosmosdb_account.evidence.id}/sqlRoleDefinitions/00000000-0000-0000-0000-000000000002"
   principal_id        = azurerm_linux_function_app.collectors.identity[0].principal_id
   scope               = "${azurerm_cosmosdb_account.evidence.id}/dbs/${azurerm_cosmosdb_sql_database.grc.name}/colls/${azurerm_cosmosdb_sql_container.identities.name}"
+}
+
+# Telemetry with the app's own identity: publish to its own App Insights, nothing else.
+resource "azurerm_role_assignment" "collector_appinsights_publish" {
+  scope                = azurerm_application_insights.collectors.id
+  role_definition_name = "Monitoring Metrics Publisher"
+  principal_id         = azurerm_linux_function_app.collectors.identity[0].principal_id
 }

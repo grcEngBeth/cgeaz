@@ -67,6 +67,21 @@ resource "azurerm_service_plan" "reporting" {
   tags                = local.common_tags
 }
 
+# Run logs for the reporting app. Before this, a failed run left no log (Lab 6: a poam_now
+# HTTP 500 could only be explained by inference). Workspace-based, so telemetry lands in
+# law-grc-sandbox with the rest of the program's logs.
+resource "azurerm_application_insights" "reporting" {
+  name                = "appi-grc-reporting-${random_string.suffix.result}"
+  location            = var.functions_location
+  resource_group_name = local.evidence_rg
+  workspace_id        = data.terraform_remote_state.foundation.outputs.log_analytics_workspace_id
+  application_type    = "web"
+  # Entra ID only: the instrumentation key alone cannot send telemetry. The app authenticates
+  # with its managed identity (APPLICATIONINSIGHTS_AUTHENTICATION_STRING below).
+  local_authentication_enabled = false
+  tags                         = local.common_tags
+}
+
 resource "azurerm_linux_function_app" "reporting" {
   #checkov:skip=CKV_AZURE_221:Y1 Consumption plan cannot use VNet integration or private endpoints, so access is identity-only (documented in CONTROLS.md)
   lifecycle {
@@ -90,18 +105,21 @@ resource "azurerm_linux_function_app" "reporting" {
   }
 
   site_config {
+    # Writes APPLICATIONINSIGHTS_CONNECTION_STRING; the value stays sensitive in state and plans.
+    application_insights_connection_string = azurerm_application_insights.reporting.connection_string
     application_stack {
       python_version = "3.11"
     }
   }
 
   app_settings = {
-    "COSMOS_ENDPOINT"                = local.cosmos_endpoint
-    "COSMOS_DATABASE"                = "grc"
-    "REPORTS_ACCOUNT_URL"            = data.azurerm_storage_account.evidence.primary_blob_endpoint
-    "REPORTS_CONTAINER"              = "reports"
-    "SCM_DO_BUILD_DURING_DEPLOYMENT" = "true"
-    "ENABLE_ORYX_BUILD"              = "true"
+    "COSMOS_ENDPOINT"                           = local.cosmos_endpoint
+    "COSMOS_DATABASE"                           = "grc"
+    "REPORTS_ACCOUNT_URL"                       = data.azurerm_storage_account.evidence.primary_blob_endpoint
+    "REPORTS_CONTAINER"                         = "reports"
+    "APPLICATIONINSIGHTS_AUTHENTICATION_STRING" = "Authorization=AAD"
+    "SCM_DO_BUILD_DURING_DEPLOYMENT"            = "true"
+    "ENABLE_ORYX_BUILD"                         = "true"
   }
 
   tags = local.common_tags
@@ -124,6 +142,13 @@ resource "azurerm_role_assignment" "reporter_blob_write" {
   # Only the WORM reports container, not every container in the evidence account.
   scope                = "${data.azurerm_storage_account.evidence.id}/blobServices/default/containers/reports"
   role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = azurerm_linux_function_app.reporting.identity[0].principal_id
+}
+
+# Telemetry with the app's own identity: publish to its own App Insights, nothing else.
+resource "azurerm_role_assignment" "reporter_appinsights_publish" {
+  scope                = azurerm_application_insights.reporting.id
+  role_definition_name = "Monitoring Metrics Publisher"
   principal_id         = azurerm_linux_function_app.reporting.identity[0].principal_id
 }
 
