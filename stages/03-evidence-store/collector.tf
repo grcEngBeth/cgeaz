@@ -57,13 +57,16 @@ resource "azurerm_linux_function_app" "collectors" {
     ignore_changes = [app_settings["ENABLE_ORYX_BUILD"]]
   }
 
-  https_only                 = true # gate rule policy/transport.rego (PR.DS-02)
-  name                       = "func-grc-collectors-${random_string.suffix.result}"
-  resource_group_name        = local.evidence_rg
-  location                   = var.functions_location
-  service_plan_id            = azurerm_service_plan.collectors.id
-  storage_account_name       = azurerm_storage_account.func_internal.name
-  storage_account_access_key = azurerm_storage_account.func_internal.primary_access_key
+  https_only = true # gate rule policy/transport.rego (PR.DS-02)
+  # No username/password publishing (FTP or SCM/Kudu): deploys authenticate with Entra ID.
+  ftp_publish_basic_authentication_enabled       = false
+  webdeploy_publish_basic_authentication_enabled = false
+  name                                           = "func-grc-collectors-${random_string.suffix.result}"
+  resource_group_name                            = local.evidence_rg
+  location                                       = var.functions_location
+  service_plan_id                                = azurerm_service_plan.collectors.id
+  storage_account_name                           = azurerm_storage_account.func_internal.name
+  storage_account_access_key                     = azurerm_storage_account.func_internal.primary_access_key
 
   identity {
     type = "SystemAssigned"
