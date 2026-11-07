@@ -157,14 +157,24 @@ resource "azurerm_role_assignment" "deployer_blob_data" {
   principal_id         = local.deployer_principal_id
 }
 
-# The deployer also seeds the frameworks/mappings containers (labs/04's seed script),
-# so it gets the Cosmos data-plane contributor role. Same reasoning as the blob role above.
-resource "azurerm_cosmosdb_sql_role_assignment" "deployer_cosmos_write" {
+# Humans read evidence; only the collector writes it (SoD). The deployer gets Cosmos
+# Data Reader on the account, and Data Contributor only on the reference-data
+# containers labs/04's seed script fills. No write to assessments or identities.
+resource "azurerm_cosmosdb_sql_role_assignment" "deployer_cosmos_read" {
+  resource_group_name = local.evidence_rg
+  account_name        = azurerm_cosmosdb_account.evidence.name
+  role_definition_id  = "${azurerm_cosmosdb_account.evidence.id}/sqlRoleDefinitions/00000000-0000-0000-0000-000000000001"
+  principal_id        = local.deployer_principal_id
+  scope               = azurerm_cosmosdb_account.evidence.id
+}
+
+resource "azurerm_cosmosdb_sql_role_assignment" "deployer_cosmos_seed" {
+  for_each            = toset([azurerm_cosmosdb_sql_container.frameworks.name, azurerm_cosmosdb_sql_container.mappings.name])
   resource_group_name = local.evidence_rg
   account_name        = azurerm_cosmosdb_account.evidence.name
   role_definition_id  = "${azurerm_cosmosdb_account.evidence.id}/sqlRoleDefinitions/00000000-0000-0000-0000-000000000002"
   principal_id        = local.deployer_principal_id
-  scope               = azurerm_cosmosdb_account.evidence.id
+  scope               = "${azurerm_cosmosdb_account.evidence.id}/dbs/${azurerm_cosmosdb_sql_database.grc.name}/colls/${each.key}"
 }
 
 # Who read, wrote or deleted evidence blobs (reports container), in the GRC workspace.

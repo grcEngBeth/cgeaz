@@ -113,11 +113,13 @@ resource "azurerm_cosmosdb_sql_role_assignment" "reporter_cosmos_read" {
   account_name        = local.cosmos_name
   role_definition_id  = "${local.cosmos_id}/sqlRoleDefinitions/00000000-0000-0000-0000-000000000001"
   principal_id        = azurerm_linux_function_app.reporting.identity[0].principal_id
-  scope               = local.cosmos_id
+  # Only the container the reporter reads (function_app.py), not the whole account.
+  scope = "${local.cosmos_id}/dbs/grc/colls/assessments"
 }
 
 resource "azurerm_role_assignment" "reporter_blob_write" {
-  scope                = data.azurerm_storage_account.evidence.id
+  # Only the WORM reports container, not every container in the evidence account.
+  scope                = "${data.azurerm_storage_account.evidence.id}/blobServices/default/containers/reports"
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_linux_function_app.reporting.identity[0].principal_id
 }
