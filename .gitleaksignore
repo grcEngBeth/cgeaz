@@ -3,3 +3,11 @@
 # It is a finding ID, not a credential. No secrets exist in this repo by design:
 # all pipeline auth is OIDC or managed identity.
 3b6f4aa486248624a4ef857d5e1f28359b99e5a6:labs/04-evidence/lab4-trace-evidence.txt:generic-api-key:5
+
+# Reviewed 2026-11-07: false positive. policy/broad_roles.rego line 14 is the built-in
+# Azure role ID of User Access Administrator (18d7d88d-d35e-4fb5-a5c3-7773c20a72d9),
+# verified with az role definition list. Built-in role IDs are identical in every tenant and
+# published by Microsoft: a role identifier, not a credential. Two fingerprints: the PR #12
+# branch commit and its merge to main.
+d60a40a9f6e734a993201e901eb3958d8bef9c6d:policy/broad_roles.rego:generic-api-key:14
+6f0e72a87f7812102ac20d9aa549dc201a9b651f:policy/broad_roles.rego:generic-api-key:14
