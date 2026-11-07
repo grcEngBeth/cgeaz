@@ -54,4 +54,4 @@ jobs:
           terraform show -json tf.plan > plan.json
 
       - name: OPA gate (conftest)
-        run: docker run --rm -v "$PWD:/project" -w /project openpolicyagent/conftest test stages/${{ matrix.stage }}/plan.json -p policy
+        run: docker run --rm -v "$PWD:/project" -w /project openpolicyagent/conftest@sha256:0e77cdf7c1fcde035f3c579e4aaa6664ee2a8be5777eaa9af9f520cdd02280c0 test stages/${{ matrix.stage }}/plan.json -p policy
