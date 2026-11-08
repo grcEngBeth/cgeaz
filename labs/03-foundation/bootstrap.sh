@@ -12,10 +12,13 @@ SUB_ID=$(az account show --query id -o tsv)
 SUFFIX=$(echo "$SUB_ID" | tr -d '-' | cut -c1-8)
 SA_NAME="stgrctfstate${SUFFIX}"
 CONTAINER="tfstate"
+# Owner tag: the collector stamps each finding with its resource group's owner tag, and
+# the POA&M shows UNASSIGNED without one. Use a role mailbox, not a personal address.
+OWNER_EMAIL="${OWNER_EMAIL:?set OWNER_EMAIL first, e.g. export OWNER_EMAIL=grc-sandbox-owner@example.com}"
 
 echo ">> State resource group: $RG_STATE"
 az group create --name "$RG_STATE" --location "$LOCATION" \
-  --tags env=shared purpose=terraform-state --output none
+  --tags env=shared purpose=terraform-state owner="$OWNER_EMAIL" --output none
 
 echo ">> State storage account: $SA_NAME (versioned, no public blob access)"
 az storage account create \
@@ -26,7 +29,7 @@ az storage account create \
   --kind StorageV2 \
   --min-tls-version TLS1_2 \
   --allow-blob-public-access false \
-  --tags env=shared purpose=terraform-state \
+  --tags env=shared purpose=terraform-state owner="$OWNER_EMAIL" \
   --output none
 
 echo ">> Enabling blob versioning (every state change becomes a recoverable version)"

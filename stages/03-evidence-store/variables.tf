@@ -38,3 +38,8 @@ variable "deployer_principal_id" {
   type        = string
   default     = null
 }
+
+variable "owner_email" {
+  description = "Accountable owner for subscription-level findings, which have no resource group owner tag. Same value as stage 01's owner tags (repo variable OWNER_EMAIL)."
+  type        = string
+}

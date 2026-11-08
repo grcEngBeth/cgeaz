@@ -37,6 +37,10 @@ def _resource_group(resource_id: str):
 def _collect() -> dict:
     subscription_id = os.environ["SUBSCRIPTION_ID"]
     cosmos_endpoint = os.environ["COSMOS_ENDPOINT"]
+    # Owner for subscription-level findings (no resource group, so no owner tag).
+    # Set in Terraform from OWNER_EMAIL: Security Reader can't read subscription tags,
+    # and the collector deliberately gets no more access than it needs.
+    subscription_owner = os.environ.get("SUBSCRIPTION_OWNER") or None
     database = os.environ["COSMOS_DATABASE"]
 
     # DefaultAzureCredential resolves to the Function App's managed identity in Azure
@@ -107,7 +111,7 @@ def _collect() -> dict:
                     "categories": props.get("metadata", {}).get("categories"),
                     "resourceId": resource_id,
                     "resourceGroup": rg_name,
-                    "owner": owners.get(rg_name) if rg_name else None,
+                    "owner": owners.get(rg_name) if rg_name else subscription_owner,
                     "collectedAt": collected_at,
                     "runId": run_id,
                 }
