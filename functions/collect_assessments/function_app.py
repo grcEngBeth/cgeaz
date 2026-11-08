@@ -21,6 +21,17 @@ app = func.FunctionApp()
 
 ARM = "https://management.azure.com"
 API_VERSION = "2021-06-01"
+RG_API_VERSION = "2021-04-01"
+
+
+def _resource_group(resource_id: str):
+    """Lowercased resource group name from an ARM ID, or None for subscription-level
+    findings. Defender returns lowercase paths, so both sides of the lookup are lowercase."""
+    parts = resource_id.strip("/").split("/")
+    for i, part in enumerate(parts[:-1]):
+        if part.lower() == "resourcegroups":
+            return parts[i + 1].lower()
+    return None
 
 
 def _collect() -> dict:
@@ -42,6 +53,23 @@ def _collect() -> dict:
         .get_container_client("assessments")
     )
 
+    # POA&M owners (capstone): each finding carries its resource group's `owner` tag,
+    # read once per run. Needs Microsoft.Resources/subscriptions/resourceGroups/read,
+    # which Security Reader grants. Tag keys are case-insensitive in Azure.
+    # A failed lookup must not cost a night of evidence: log it, leave owners null,
+    # and the POA&M shows those items as unassigned.
+    owners = {}
+    try:
+        for rg in _arm_list(
+            f"{ARM}/subscriptions/{subscription_id}/resourcegroups?api-version={RG_API_VERSION}", token
+        ):
+            tags = {k.lower(): v for k, v in (rg.get("tags") or {}).items()}
+            owners[rg["name"].lower()] = tags.get("owner")
+    except requests.RequestException:
+        logging.error("owner lookup failed: resource group tags not read; owners left null")
+    logging.info("owner lookup: %d resource groups, %d with an owner tag",
+                 len(owners), sum(1 for o in owners.values() if o))
+
     url = (
         f"{ARM}/subscriptions/{subscription_id}"
         f"/providers/Microsoft.Security/assessments?api-version={API_VERSION}"
@@ -61,6 +89,7 @@ def _collect() -> dict:
                 props.get("resourceDetails", {}).get("Id")
                 or props.get("resourceDetails", {}).get("id", "")
             )
+            rg_name = _resource_group(resource_id)
             # Deterministic ID: same assessment+resource upserts, never duplicates.
             doc_id = hashlib.sha256(
                 f"{assessment['name']}|{resource_id}".encode()
@@ -77,6 +106,8 @@ def _collect() -> dict:
                     "severity": props.get("metadata", {}).get("severity"),
                     "categories": props.get("metadata", {}).get("categories"),
                     "resourceId": resource_id,
+                    "resourceGroup": rg_name,
+                    "owner": owners.get(rg_name) if rg_name else None,
                     "collectedAt": collected_at,
                     "runId": run_id,
                 }

@@ -102,7 +102,9 @@ def generate_poam() -> dict:
             "severity": severity,
             "detectedRun": run_id,
             "scheduledCompletion": due.isoformat(),
-            "owner": "resource-group owner tag",  # resolved during Domain 5's lab extension
+            # The resource group's owner tag, stamped on the finding by the collector.
+            # No tag -> say so: an unowned POA&M item is a gap, so show it, don't guess.
+            "owner": f.get("owner") or "UNASSIGNED (no owner tag)",
             "status": "Open",
         }
         rows.append(row)
