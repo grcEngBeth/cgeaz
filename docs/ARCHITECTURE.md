@@ -1,10 +1,9 @@
 # CGE-AZ Pipeline Architecture
 
-How the starter pipeline is put together: the stage flow, the contracts between
-stages, where data goes, and which identity is allowed to touch what. The capstone
-rubric asks for an architecture doc "showing stage flow and identity boundaries" —
-this is the starter's. Yours should describe *your* pipeline, including every place
-you departed from this one and why.
+How this pipeline is put together: the stage flow, the contracts between stages,
+where data goes, and which identity is allowed to touch what. It extends the course
+starter's architecture doc. Where this build departs from the starter, the text says
+so and names the pull request; section 5 lists every departure and why.
 
 ## 1. Stage flow
 
@@ -58,22 +57,23 @@ untouched and becomes change-managed.
 
 ```
  Defender for Cloud ──(assessments API)──▶ collector Function ──▶ Cosmos: assessments
-       │                                   nightly 05:00 UTC          /subscriptionId
-       │                                   runId + collectedAt
-  Azure Policy ──────────────────────────▶ compliance states (portal / KQL)
-                                                                    │
-                 frameworks ◀── seed_frameworks.py (CSF 2.0 catalog) │
-                 mappings   ◀── the crosswalk, as data               │
-                                                                    ▼
-                                           reporting Function ◀── reads Cosmos ONLY
-                                           POA&M daily (xlsx+json), SAR weekly (md)
-                                                                    │
-                                                                    ▼
-                                           WORM `reports` container (immutable blob)
-                                                                    │
-                                                                    ▼
-                                           Stage 05 narrative (optional) reads reports
+                                           daily 05:00 UTC          /subscriptionId
+                                           + resourceGroup, owner
+ ARM role assignments ─────────────────▶ collector Function ──▶ Cosmos: identities
+                                           daily 05:10 UTC          /subscriptionId
+ Azure Policy ──────────────────────────▶ compliance states (portal / KQL; not collected)
+
+                 frameworks ◀── seed_frameworks.py (CSF 2.0 catalog)
+                 mappings   ◀── the crosswalk, as data
+
+ Cosmos: assessments ──(latest runId)──▶ reporting Function ──▶ WORM `reports` container
+                                         POA&M daily 06:00 UTC (xlsx + json)
+                                         SAR weekly, Mondays 07:00 UTC (md)
+
+ Both Function Apps ──▶ Application Insights (workspace-based, managed-identity auth)
 ```
+
+The starter's optional stage 05 (an AI narrative over the reports) was not built.
 
 Three rules make this defensible:
 
@@ -85,18 +85,48 @@ Three rules make this defensible:
   container carries a time-based immutability policy. Unlocked for the course so
   teardown works; production locks it.
 
+### What the collectors add beyond the starter
+
+- **Role assignments** (PR #7): a second timer in the same collector app writes one
+  document per role assignment (principal ID and type, role, scope, scope level, a
+  `privileged` flag, `runId`, `collectedAt`) to `identities`. It needs no new ARM
+  role: Security Reader already includes `Microsoft.Authorization/*/read`.
+- **Owners on every finding** (PRs #17, #18): each assessment carries its
+  `resourceGroup` and that group's `owner` tag, read once per run. Subscription-level
+  findings take `SUBSCRIPTION_OWNER`, set by Terraform from `OWNER_EMAIL`, because
+  the collector deliberately cannot read subscription tags. A group with no owner
+  tag shows `UNASSIGNED (no owner tag)` in the POA&M rather than a guessed owner.
+
+### Current state, not history
+
+Cosmos holds one document per finding and one per role assignment, overwritten
+(upserted) on every run and never deleted. Three consequences:
+
+- **Stale documents.** A torn-down resource or removed role assignment leaves its
+  last document behind with an older `runId`. Reports select the latest run
+  (`_latest_run`, then filter on its `runId`), so stale documents never reach the
+  POA&M or SAR; ad-hoc queries must do the same. Seen live on Nov 8: 16 identity
+  documents, 15 in the latest run, 1 left from a role assignment PR #13 replaced.
+- **A partial run would undercount.** If a collector run stopped midway, it would
+  still be the latest `runId`, and the next report would miss what it never wrote.
+  Nothing marks a run complete today; App Insights (PR #16) records each run, so a
+  failure is visible, not silent.
+- **History lives in the reports.** A finding that fails and recovers between two
+  daily reports leaves no trace in Cosmos. The dated, immutable POA&M and SAR files
+  are the record over time; a history container or change feed would close this.
+
 ### Partition keys, justified
 
 | Container | Partition key | Why |
 |---|---|---|
 | `assessments` | `/subscriptionId` | Every query the reports run is "this subscription, this run". A second and third subscription land as new partitions with no reshaping — the scale-by-scope requirement in the capstone brief. |
+| `identities` | `/subscriptionId` | Same access pattern as `assessments`: one subscription, one run. |
 | `frameworks` | `/frameworkId` | A catalog is read whole, one framework at a time. |
 | `mappings` | `/frameworkId` | The crosswalk is queried per target framework when a report resolves which controls an assessment satisfies. |
 
-Document IDs in `assessments` are a hash of `assessmentId|resourceId`, so a re-run
-upserts rather than duplicates; lineage comes from `runId` and `collectedAt` on every
-document. If you change a partition key in your capstone, this table is where you
-defend it. A schema you cannot justify is a schema you copied.
+Document IDs in `assessments` are a hash of `assessmentId|resourceId`, and in
+`identities` are deterministic per role assignment, so a re-run upserts rather than
+duplicates; lineage comes from `runId` and `collectedAt` on every document.
 
 ## 3. Identity boundaries
 
