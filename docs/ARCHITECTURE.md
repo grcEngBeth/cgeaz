@@ -199,24 +199,71 @@ Documented gaps:
 **The pipeline on the environment.** Policy assignments at the sandbox management
 group inherit to every current and future subscription. Effects are deliberate:
 Audit for the tag rule (onboarding), Deny for public blob (earned), DeployIfNotExists
-for diagnostics (logging that enforces its own coverage). Stage 06 adds a Modify
+for diagnostics (logging that enforces its own coverage), and Audit for this build's
+own secure-transfer policy (new control; see section 5). Stage 06 adds a Modify
 effect on an escalation ladder wired to one variable — `audit` → `dry-run` → `enforce`
 — where each step up is a reviewed one-line diff and dry-run keeps a human at the
-remediation-task approval.
+remediation-task approval. The sandbox runs `dry-run`.
 
 **The pipeline on itself.** The compliance gate (`.github/workflows/gate.yml`) runs
-`terraform plan` per stage on every PR and refuses plans that break the repo's own
-standard (`policy/*.rego`: no public blob, no shared keys, no broad roles). Drift
-detection (`drift.yml`) plans nightly with `-detailed-exitcode` and opens an issue
-when reality has moved away from code; the KQL tripwire in Log Analytics answers the
-other direction — who has been touching reality.
+`terraform plan` for each of the five stages (01, 02, 03, 04, 06) on every pull
+request into `main`, then conftest refuses plans that break the repo's own standard
+(`policy/*.rego`: no public blob, no shared keys, no broad roles, HTTPS-only and
+TLS 1.2+). The conftest image is pinned by digest, so the gate cannot change under
+the repo (PR #12). Branch protection requires all five checks and allows no bypass,
+including for the repo owner (PR #12). Before PR #11, stage 02 was in no workflow's
+matrix, so Defender plan tiers and the CSF 2.0 assignment were never gated or
+watched for drift.
 
-## 5. Where this starter stops and yours begins
+Drift detection (`drift.yml`) plans every stage nightly at 08:00 UTC with
+`-detailed-exitcode` and keeps one open issue per drifted stage, commenting on later
+nights. Before PR #8 it could never open an issue: setup-terraform's wrapper turned
+plan's exit code 2 (drift) into 0, and `continue-on-error` showed plan errors as
+passing. Proved after the fix: run 42308227169 opened issue #9; PR #10 removed both
+drift sources and the next clean run closed it. The KQL tripwire in Log Analytics
+answers the other direction — who has been touching reality.
 
-The rubric grades the pipeline, not the estate (`seed-estate.sh` gives you material
-to find). At minimum your fork must add one policy or control of your own, correctly
-effected and mapped in `CONTROLS.md`, and this document should gain a section for it:
-what it checks, which identity acts, what its blast radius is, and why you chose its
-effect. Good candidates the seeded estate leaves lying around: management ports open
-to the internet, Key Vaults without purge protection, workload identities holding
-Contributor, resources missing an owner tag.
+**Failures are visible.** Both Function Apps send telemetry to workspace-based
+Application Insights with their managed identities (PR #16). Before, a failed report
+run left no log and its cause could only be inferred.
+
+## 5. What this build adds to the starter
+
+### Own control: secure transfer, as policy and as gate rule
+
+| | Policy `cge-require-secure-transfer` (PR #5) | Gate rule `policy/transport.rego` (PR #6) |
+|---|---|---|
+| Checks | Storage accounts with `supportsHttpsTrafficOnly` false | Planned storage accounts and Function Apps without HTTPS-only or with TLS below 1.2 |
+| Where | `cge-grc-baseline` initiative at `mg-grc-sandbox` | Every PR's `terraform plan`, all five stages |
+| Effect | Audit; escalation through the reviewed variable `secure_transfer_policy_effect` | Deny the merge (gate fails) |
+| Who acts | No identity: Audit only reports | The CI identity runs the plan; conftest decides |
+| Blast radius | None at Audit. At Deny: 7 of 8 storage accounts already Compliant, including all of the pipeline's own; only the seed account `stfafopub421155` would be refused on its next create or update | Only PRs whose plan would ship an insecure resource; proved on PR #6, where both Function Apps lacked `https_only` and the gate failed stages 03 and 04 until fixed |
+| CSF 2.0 | PR.DS-02 (data in transit) | PR.DS-02 |
+
+Audit first because the control is new: the 00:02 UTC Nov 6 scan showed the
+estate's state before anything could be blocked. The policy and the gate rule are
+twins: the policy finds insecure transport in what already exists, the gate stops it
+arriving through code.
+
+### Changes to the starter, and why
+
+| Change | Why | PR |
+|---|---|---|
+| Reports return `{"skipped": true}` when today's WORM file exists | A timer after a manual run failed with HTTP 500 | #2 |
+| Remediation identity on custom `cge-remediation-storage-writer` | Storage Account Contributor also allowed delete and `listKeys` | #3 |
+| CI identity on custom `cge-ci-planner`; `arm-your-fork.sh` creates it and the numeric-ID OIDC subjects | Contributor let CI write anything; a rebuild needed manual trust rules | #4 |
+| Role-assignment collector and `identities` container | RBAC findings were not collected at all | #7 |
+| Drift workflow reports drift and errors honestly; drift sources removed | Drift could never open an issue | #8, #10 |
+| Stage 02 gated and drift-watched; checkov and tflint clean, every skip reasoned | Stage 02 was unwatched; checkov could not parse two stages | #11 |
+| Conftest pinned by digest; `broad_roles.rego` also blocks User Access Administrator and RBAC Administrator, by name or role ID, with 13 unit tests | Either role can grant any role; a by-ID Owner grant slipped past | #12 |
+| Reporter and operator data access narrowed to single containers | Account-wide grants exceeded each identity's job | #13 |
+| FTP and SCM basic-auth publishing off on both Function Apps | No username or password should be able to publish code | #14 |
+| Application Insights with managed-identity auth | A failed run left no log | #16 |
+| Owner on every POA&M item | Every row said placeholder text | #17, #18 |
+
+Fixed while working through the labs, before the capstone: the collector's Cosmos
+write narrowed to `assessments`; `$expand=metadata` so findings carry severity; PII
+removed from tags and history; CI trust rules for GitHub's numeric-ID OIDC subject;
+backend settings passed inline in CI; gate matrix `fail-fast: false` so one failing
+stage no longer orphans state locks; the official conftest image, which parses
+`rego.v1`.
