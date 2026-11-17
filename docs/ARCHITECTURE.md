@@ -11,7 +11,7 @@ so and names the pull request; section 5 lists every departure and why.
             ┌──────────────┐    ┌──────────────┐    ┌──────────────────┐
   Lab 1-3   │ 01 foundation│───▶│ 02 activation│    │ 03 evidence store│
             │ MG hierarchy │    │ discover gap │    │ Cosmos + WORM    │
-            │ policies     │    │ enable plans │    │ blob + collector │
+            │ policies     │    │ enable plans │    │ blob, collectors │
             │ remediation  │    │ CSF 2.0 std  │    └────────┬─────────┘
             │ identity     │    └──────────────┘             │
             └──────┬───────┘                                 ▼
@@ -23,7 +23,7 @@ so and names the pull request; section 5 lists every departure and why.
             ┌──────────────┐                                 ▼
             │ 06 enforce   │                        ┌──────────────────┐
             │ Modify effect│                        │ 05 narrative     │
-            │ audit→dry-run│                        │ (optional) AI    │
+            │ audit→dry-run│                        │ (not built) AI   │
             │ →enforce     │                        │ digest of 04     │
             └──────────────┘                        └──────────────────┘
 ```
@@ -31,8 +31,9 @@ so and names the pull request; section 5 lists every departure and why.
 Each stage is a Terraform root module with its own state file in the shared
 `tfstate` container (bootstrapped once by `labs/03-foundation/bootstrap.sh`, the one
 piece that cannot manage itself). Stages are applied in number order and destroyed in
-reverse. Stage 05 is a lab, not a stage directory: it reads stage 04's artifacts and
-produces prose; it never decides anything.
+reverse. Stage 05 is not built in this pipeline: there is no `stages/05-*` directory. In the
+course it is an optional lab that reads stage 04's artifacts and produces prose; it
+never decides anything.
 
 ### The contract between stages
 
@@ -42,7 +43,7 @@ are the interface; everything else is private implementation.
 | Stage | Reads from | Publishes |
 |---|---|---|
 | 01 foundation | nothing | `subscription_id`, `management_group_id`, `log_analytics_workspace_id`, `evidence_resource_group_name`, `remediation_identity_id`, `remediation_identity_principal_id` |
-| 02 activation | nothing (discovers live state with `azapi` data sources) | Defender plan tiers, the NIST CSF 2.0 assignment |
+| 02 activation | nothing (discovers live state with `azapi` data sources) | `current_plan_tiers`, `activation_needed` (it also manages the Defender plan tiers and the NIST CSF 2.0 assignment; no later stage reads them) |
 | 03 evidence store | 01 | `cosmos_endpoint`, `cosmos_account_id/name`, `evidence_storage_account`, `reports_container`, `collector_function_app`, `collector_principal_id` |
 | 04 reporting | 01, 03 | `reporting_function_app`, `reporter_principal_id` |
 | 06 enforcement | 01 | `remediation_mode` |
