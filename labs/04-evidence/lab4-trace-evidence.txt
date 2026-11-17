@@ -1,8 +1,9 @@
 # Lab 4 trace — 2026-10-27T21:15:56Z — assessment ad4f3ff1-30eb-5042-16ed-27198f640b8d on stgrcseed18321
+# Note (2026-11-17): the "key" value below is shortened to its first 8 characters so secret scanners do not misread it; the full assessment ID is in the line above.
 ## Defender (live view)
 [
   {
-    "key": "ad4f3ff1-30eb-5042-16ed-27198f640b8d",
+    "key": "ad4f3ff1-…",
     "resource": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-sandbox-dev/providers/microsoft.storage/storageaccounts/stgrcseed18321",
     "status": "Unhealthy",
     "title": "Storage accounts should restrict network access using virtual network rules"

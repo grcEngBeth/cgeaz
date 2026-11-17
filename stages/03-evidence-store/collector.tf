@@ -5,6 +5,7 @@
 # Internal plumbing storage for the Functions runtime (NOT the evidence store —
 # that account has shared keys disabled; this one is the app's own scratch space).
 resource "azurerm_storage_account" "func_internal" {
+  local_user_enabled = false # no SFTP/local users; access is Entra ID (CKV_AZURE_244)
   #checkov:skip=CKV_AZURE_33:queues here are internal to the Functions runtime and hold no evidence
   #checkov:skip=CKV_AZURE_59:Y1 Consumption plan cannot use VNet integration or private endpoints, so access is identity-only (documented in CONTROLS.md)
   #checkov:skip=CKV_AZURE_206:LRS in the sandbox; production evidence would use GRS (documented)

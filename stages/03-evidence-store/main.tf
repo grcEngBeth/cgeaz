@@ -96,6 +96,7 @@ resource "azurerm_cosmosdb_sql_container" "mappings" {
 # --- Evidence artifact storage: WORM reports container, zero shared keys. ---
 
 resource "azurerm_storage_account" "evidence" {
+  local_user_enabled = false # no SFTP/local users; access is Entra ID (CKV_AZURE_244)
   #checkov:skip=CKV_AZURE_33:no queues in the evidence account
   #checkov:skip=CKV_AZURE_59:Y1 Consumption plan cannot use VNet integration or private endpoints, so access is identity-only (documented in CONTROLS.md)
   #checkov:skip=CKV_AZURE_206:LRS in the sandbox; production evidence would use GRS (documented)
