@@ -1,0 +1,74 @@
+gate (03-evidence-store)	OPA gate (conftest)	﻿2026-11-06T00:07:09.9610137Z ##[group]Run docker run --rm -v "$PWD:/project" -w /project openpolicyagent/conftest test stages/03-evidence-store/plan.json -p policy
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:09.9611179Z ^[[36;1mdocker run --rm -v "$PWD:/project" -w /project openpolicyagent/conftest test stages/03-evidence-store/plan.json -p policy^[[0m
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:09.9632169Z shell: /usr/bin/bash -e {0}
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:09.9632440Z env:
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:09.9632637Z   ARM_USE_OIDC: true
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:09.9632997Z   ARM_CLIENT_ID: ***
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:09.9633269Z   ARM_TENANT_ID: 866eef62-d886-428c-a8ea-4933686dfda4
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:09.9633658Z   ARM_SUBSCRIPTION_ID: 4211551c-4854-4720-a8c5-d1f3ebcbd9ee
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:09.9634048Z   TF_VAR_state_storage_account: stgrctfstate4211551c
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:09.9634422Z   TF_VAR_owner_email: grc-sandbox-owner@example.com
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:09.9634891Z   TERRAFORM_CLI_PATH: /home/runner/work/_temp/c176612e-5805-4c69-82a6-3ca8de259ba8
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:09.9635324Z ##[endgroup]
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:10.0766711Z Unable to find image 'openpolicyagent/conftest:latest' locally
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:10.3336604Z latest: Pulling from openpolicyagent/conftest
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:10.4090838Z e2de96513ba9: Already exists
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:10.4131133Z d716347cd192: Pulling fs layer
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:10.4136115Z 75d978608d65: Pulling fs layer
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:10.4136666Z 42c344284e40: Pulling fs layer
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:10.4137166Z a1ad7571f06f: Pulling fs layer
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:10.4137663Z a1ad7571f06f: Waiting
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:10.4629313Z 42c344284e40: Verifying Checksum
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:10.4630210Z 42c344284e40: Download complete
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:10.4923288Z a1ad7571f06f: Verifying Checksum
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:10.4923822Z a1ad7571f06f: Download complete
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:10.5115204Z d716347cd192: Verifying Checksum
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:10.5115630Z d716347cd192: Download complete
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:10.5779939Z 75d978608d65: Verifying Checksum
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:10.5781072Z 75d978608d65: Download complete
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:11.1881444Z d716347cd192: Pull complete
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:11.5260087Z 75d978608d65: Pull complete
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:11.5382332Z 42c344284e40: Pull complete
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:11.5478963Z a1ad7571f06f: Pull complete
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:11.5526349Z Digest: sha256:0e77cdf7c1fcde035f3c579e4aaa6664ee2a8be5777eaa9af9f520cdd02280c0
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:11.5534805Z Status: Downloaded newer image for openpolicyagent/conftest:latest
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:11.7652768Z ^[[31mFAIL^[[0m - stages/03-evidence-store/plan.json - main - azurerm_linux_function_app.collectors: Function Apps must set https_only = true (otherwise plain HTTP is served)
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:11.7653519Z 
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:11.7653769Z ^[[31m8 tests, 7 passed, 0 warnings, 1 failure, 0 exceptions^[[0m
+gate (03-evidence-store)	OPA gate (conftest)	2026-11-06T00:07:11.8468982Z ##[error]Process completed with exit code 1.
+gate (04-reporting)	OPA gate (conftest)	﻿2026-11-06T00:07:14.6367069Z ##[group]Run docker run --rm -v "$PWD:/project" -w /project openpolicyagent/conftest test stages/04-reporting/plan.json -p policy
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:14.6367536Z ^[[36;1mdocker run --rm -v "$PWD:/project" -w /project openpolicyagent/conftest test stages/04-reporting/plan.json -p policy^[[0m
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:14.6383947Z shell: /usr/bin/bash -e {0}
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:14.6384096Z env:
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:14.6384204Z   ARM_USE_OIDC: true
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:14.6384448Z   ARM_CLIENT_ID: ***
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:14.6384584Z   ARM_TENANT_ID: 866eef62-d886-428c-a8ea-4933686dfda4
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:14.6384774Z   ARM_SUBSCRIPTION_ID: 4211551c-4854-4720-a8c5-d1f3ebcbd9ee
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:14.6384964Z   TF_VAR_state_storage_account: stgrctfstate4211551c
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:14.6385144Z   TF_VAR_owner_email: grc-sandbox-owner@example.com
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:14.6385380Z   TERRAFORM_CLI_PATH: /home/runner/work/_temp/23de0edd-c132-486f-a642-6a7af777916e
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:14.6385585Z ##[endgroup]
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:14.7179682Z Unable to find image 'openpolicyagent/conftest:latest' locally
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:15.7038325Z latest: Pulling from openpolicyagent/conftest
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:15.9717369Z e2de96513ba9: Already exists
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:15.9743281Z d716347cd192: Pulling fs layer
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:15.9743596Z 75d978608d65: Pulling fs layer
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:15.9744043Z 42c344284e40: Pulling fs layer
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:15.9744308Z a1ad7571f06f: Pulling fs layer
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:15.9744506Z a1ad7571f06f: Waiting
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:16.2263806Z 42c344284e40: Verifying Checksum
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:16.2264323Z 42c344284e40: Download complete
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:16.2936754Z d716347cd192: Download complete
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:16.4068617Z 75d978608d65: Verifying Checksum
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:16.4068940Z 75d978608d65: Download complete
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:16.4736706Z a1ad7571f06f: Download complete
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:16.7443328Z d716347cd192: Pull complete
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:17.3324217Z 75d978608d65: Pull complete
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:17.3455434Z 42c344284e40: Pull complete
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:17.3524048Z a1ad7571f06f: Pull complete
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:17.3555727Z Digest: sha256:0e77cdf7c1fcde035f3c579e4aaa6664ee2a8be5777eaa9af9f520cdd02280c0
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:17.3567071Z Status: Downloaded newer image for openpolicyagent/conftest:latest
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:17.5196576Z ^[[31mFAIL^[[0m - stages/04-reporting/plan.json - main - azurerm_linux_function_app.reporting: Function Apps must set https_only = true (otherwise plain HTTP is served)
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:17.5197005Z 
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:17.5197133Z ^[[31m8 tests, 7 passed, 0 warnings, 1 failure, 0 exceptions^[[0m
+gate (04-reporting)	OPA gate (conftest)	2026-11-06T00:07:17.5787674Z ##[error]Process completed with exit code 1.

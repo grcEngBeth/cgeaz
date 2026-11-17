@@ -1,0 +1,19 @@
+Sat Nov  7 16:15:24 UTC 2026
+
+Local auth disabled on both App Insights; Monitoring Metrics Publisher per app; APPLICATIONINSIGHTS_AUTHENTICATION_STRING=Authorization=AAD
+
+The command requires the extension application-insights. Do you want to install it now? The command will continue to run after the extension is installed. (Y/n): (app-insights CLI extension not installed; skipped)
+AppRoleName                 TableName      Type       LastSeen                      Rows
+--------------------------  -------------  ---------  ----------------------------  ------
+func-grc-collectors-h95r65  PrimaryResult  AppTraces  2026-11-07T16:14:05.0511618Z  41
+func-grc-reporting-5i5qga   PrimaryResult  AppTraces  2026-11-07T16:13:40.0295044Z  41
+{
+  "disableLocalAuth": true,
+  "name": "appi-grc-collectors-h95r65",
+  "workspace": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-sandbox-dev/providers/Microsoft.OperationalInsights/workspaces/law-grc-sandbox"
+}
+{
+  "disableLocalAuth": true,
+  "name": "appi-grc-reporting-5i5qga",
+  "workspace": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-sandbox-dev/providers/Microsoft.OperationalInsights/workspaces/law-grc-sandbox"
+}

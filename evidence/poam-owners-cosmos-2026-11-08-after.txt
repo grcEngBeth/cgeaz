@@ -1,0 +1,13 @@
+latest run: 94c7ef05-dbdb-4612-8da1-0f39417a3a9a at 2026-11-08T14:02:54 UTC, 141 documents
+documents with an owner field: 141 of 141
+
+resource group           owner                             docs  unhealthy
+(subscription level)     grc-sandbox-owner@example.com       40         25
+networkwatcherrg         UNASSIGNED                           1          0
+rg-fafo-legacy           UNASSIGNED                          13          4
+rg-fafo-prod             grc-sandbox-owner@example.com       22         11
+rg-grc-evidence-dev      grc-sandbox-owner@example.com       47         23
+rg-grc-sandbox-dev       grc-sandbox-owner@example.com       11          5
+rg-grc-tfstate           grc-sandbox-owner@example.com        7          3
+
+unhealthy total (= POA&M items next run): 71

@@ -1,0 +1,716 @@
+{
+  "runId": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+  "collectedAt": "2026-11-09T05:00:00.201210+00:00",
+  "items": [
+    {
+      "poamId": "POAM-20261109-001",
+      "weakness": "There should be more than one owner assigned to subscriptions",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee",
+      "severity": "High",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2026-12-09",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-002",
+      "weakness": "Microsoft Defender for Resource Manager should be enabled",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee",
+      "severity": "High",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2026-12-09",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-003",
+      "weakness": "Microsoft Defender CSPM should be enabled",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee",
+      "severity": "High",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2026-12-09",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-004",
+      "weakness": "Microsoft Defender for App Service should be enabled",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee",
+      "severity": "High",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2026-12-09",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-005",
+      "weakness": "Microsoft Defender for Storage plan should be enabled with Malware Scanning and Sensitive Data Threat Detection",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee",
+      "severity": "High",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2026-12-09",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-006",
+      "weakness": "Secure transfer to storage accounts should be enabled",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-fafo-prod/providers/microsoft.storage/storageaccounts/stfafopub421155",
+      "severity": "High",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2026-12-09",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-007",
+      "weakness": "Role-Based Access Control should be used on Azure Keyvault Services (AKV)",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-fafo-prod/providers/microsoft.keyvault/vaults/kv-fafo-421155",
+      "severity": "High",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2026-12-09",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-008",
+      "weakness": "Email notification for high severity alerts should be enabled",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-009",
+      "weakness": "Subscriptions should have a contact email address for security issues",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-010",
+      "weakness": "Azure Monitor solution 'Security and Audit' must be deployed",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-011",
+      "weakness": "Security Center standard pricing tier should be selected",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/providers/microsoft.security/pricings/virtualmachines",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-012",
+      "weakness": "Security Center standard pricing tier should be selected",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/providers/microsoft.security/pricings/sqlservervirtualmachines",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-013",
+      "weakness": "Security Center standard pricing tier should be selected",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/providers/microsoft.security/pricings/sqlservers",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-014",
+      "weakness": "Security Center standard pricing tier should be selected",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/providers/microsoft.security/pricings/opensourcerelationaldatabases",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-015",
+      "weakness": "Security Center standard pricing tier should be selected",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/providers/microsoft.security/pricings/cosmosdbs",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-016",
+      "weakness": "Security Center standard pricing tier should be selected",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/providers/microsoft.security/pricings/containers",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-017",
+      "weakness": "Security Center standard pricing tier should be selected",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/providers/microsoft.security/pricings/cloudposture",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-018",
+      "weakness": "Security Center standard pricing tier should be selected",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/providers/microsoft.security/pricings/arm",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-019",
+      "weakness": "Security Center standard pricing tier should be selected",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/providers/microsoft.security/pricings/appservices",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-020",
+      "weakness": "Security Center standard pricing tier should be selected",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/providers/microsoft.security/pricings/api",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-021",
+      "weakness": "Security Center standard pricing tier should be selected",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/providers/microsoft.security/pricings/ai",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-022",
+      "weakness": "Audit resource location matches resource group location",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.web/sites/func-grc-collectors-h95r65",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-023",
+      "weakness": "Audit resource location matches resource group location",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.web/serverfarms/asp-grc-collectors-dev",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-024",
+      "weakness": "Audit resource location matches resource group location",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.storage/storageaccounts/stgrcfunch95r65",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-025",
+      "weakness": "Audit resource location matches resource group location",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.storage/storageaccounts/stgrcevidh95r65",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-026",
+      "weakness": "Audit resource location matches resource group location",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.documentdb/databaseaccounts/cosmos-grc-evidence-h95r65",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-027",
+      "weakness": "Azure subscriptions should have a log profile for Activity Log",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-028",
+      "weakness": "Azure Monitor should collect activity logs from all regions",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-029",
+      "weakness": "An activity log alert should exist for specific Policy operations",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-030",
+      "weakness": "Microsoft Defender for Azure Cosmos DB should be enabled",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-031",
+      "weakness": "An activity log alert should exist for specific Administrative operations",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-032",
+      "weakness": "Audit resource location matches resource group location",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.web/sites/func-grc-reporting-5i5qga",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-033",
+      "weakness": "Audit resource location matches resource group location",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.web/serverfarms/asp-grc-reporting-dev",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-034",
+      "weakness": "Audit resource location matches resource group location",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.storage/storageaccounts/stgrcrpt5i5qga",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-035",
+      "weakness": "Diagnostic logs in Key Vault should be enabled",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-fafo-prod/providers/microsoft.keyvault/vaults/kv-fafo-421155",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-036",
+      "weakness": "Audit resource location matches resource group location",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.insights/components/appi-grc-collectors-h95r65",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-037",
+      "weakness": "Audit resource location matches resource group location",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.insights/components/appi-grc-reporting-5i5qga",
+      "severity": "Low",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-05-08",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-038",
+      "weakness": "Email notification to subscription owner for high severity alerts should be enabled",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-039",
+      "weakness": "Storage accounts should restrict network access using virtual network rules",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-tfstate/providers/microsoft.storage/storageaccounts/stgrctfstate4211551c",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-040",
+      "weakness": "Storage accounts should restrict network access using virtual network rules",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-sandbox-dev/providers/microsoft.storage/storageaccounts/stgrcseed18321",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-041",
+      "weakness": "Storage accounts should restrict network access using virtual network rules",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.storage/storageaccounts/stgrcfunch95r65",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-042",
+      "weakness": "Storage accounts should restrict network access using virtual network rules",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.storage/storageaccounts/stgrcevidh95r65",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-043",
+      "weakness": "Storage account should use a private link connection",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-tfstate/providers/microsoft.storage/storageaccounts/stgrctfstate4211551c",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-044",
+      "weakness": "Storage account should use a private link connection",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-sandbox-dev/providers/microsoft.storage/storageaccounts/stgrcseed18321",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-045",
+      "weakness": "Storage account should use a private link connection",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.storage/storageaccounts/stgrcfunch95r65",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-046",
+      "weakness": "Storage account should use a private link connection",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.storage/storageaccounts/stgrcevidh95r65",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-047",
+      "weakness": "Azure Cosmos DB accounts should have firewall rules",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.documentdb/databaseaccounts/cosmos-grc-evidence-h95r65",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-048",
+      "weakness": "Log Analytics workspaces should block log ingestion and querying from public networks",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-sandbox-dev/providers/microsoft.operationalinsights/workspaces/law-grc-sandbox",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-049",
+      "weakness": "Azure Cosmos DB should disable public network access",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.documentdb/databaseaccounts/cosmos-grc-evidence-h95r65",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-050",
+      "weakness": "CosmosDB accounts should use private link",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.documentdb/databaseaccounts/cosmos-grc-evidence-h95r65",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-051",
+      "weakness": "Storage accounts should prevent shared key access",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-tfstate/providers/microsoft.storage/storageaccounts/stgrctfstate4211551c",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-052",
+      "weakness": "Storage accounts should prevent shared key access",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-sandbox-dev/providers/microsoft.storage/storageaccounts/stgrcseed18321",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-053",
+      "weakness": "Storage accounts should prevent shared key access",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.storage/storageaccounts/stgrcfunch95r65",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-054",
+      "weakness": "Log Analytics Workspaces should block non-Azure Active Directory based ingestion.",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-sandbox-dev/providers/microsoft.operationalinsights/workspaces/law-grc-sandbox",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-055",
+      "weakness": "Storage accounts should restrict network access using virtual network rules",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.storage/storageaccounts/stgrcrpt5i5qga",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-056",
+      "weakness": "Storage account should use a private link connection",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.storage/storageaccounts/stgrcrpt5i5qga",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-057",
+      "weakness": "Storage accounts should prevent shared key access",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.storage/storageaccounts/stgrcrpt5i5qga",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-058",
+      "weakness": "Storage accounts should restrict network access using virtual network rules",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-fafo-prod/providers/microsoft.storage/storageaccounts/stfafopub421155",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-059",
+      "weakness": "Storage accounts should restrict network access using virtual network rules",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-fafo-prod/providers/microsoft.storage/storageaccounts/stfafoarch421155",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-060",
+      "weakness": "Storage accounts should restrict network access using virtual network rules",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-fafo-legacy/providers/microsoft.storage/storageaccounts/stfafologs421155",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "UNASSIGNED (no owner tag)",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-061",
+      "weakness": "Storage account should use a private link connection",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-fafo-prod/providers/microsoft.storage/storageaccounts/stfafoarch421155",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-062",
+      "weakness": "Storage account should use a private link connection",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-fafo-prod/providers/microsoft.storage/storageaccounts/stfafopub421155",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-063",
+      "weakness": "Storage account should use a private link connection",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-fafo-legacy/providers/microsoft.storage/storageaccounts/stfafologs421155",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "UNASSIGNED (no owner tag)",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-064",
+      "weakness": "Firewall should be enabled on Key Vault",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-fafo-prod/providers/microsoft.keyvault/vaults/kv-fafo-421155",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-065",
+      "weakness": "Azure Key Vaults should use private link",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-fafo-prod/providers/microsoft.keyvault/vaults/kv-fafo-421155",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-066",
+      "weakness": "Key vaults should have deletion protection enabled",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-fafo-prod/providers/microsoft.keyvault/vaults/kv-fafo-421155",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-067",
+      "weakness": "Flow logs should be configured for every network security group",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-fafo-legacy/providers/microsoft.network/networksecuritygroups/nsg-fafo-open",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "UNASSIGNED (no owner tag)",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-068",
+      "weakness": "Storage accounts should prevent shared key access",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-fafo-prod/providers/microsoft.storage/storageaccounts/stfafopub421155",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-069",
+      "weakness": "Storage accounts should prevent shared key access",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-fafo-legacy/providers/microsoft.storage/storageaccounts/stfafologs421155",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "UNASSIGNED (no owner tag)",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-070",
+      "weakness": "Application Insights components should block log ingestion and querying from public networks",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.insights/components/appi-grc-collectors-h95r65",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    },
+    {
+      "poamId": "POAM-20261109-071",
+      "weakness": "Application Insights components should block log ingestion and querying from public networks",
+      "resourceId": "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.insights/components/appi-grc-reporting-5i5qga",
+      "severity": "Medium",
+      "detectedRun": "a51591fa-c94a-41b3-90d5-a6adfbd33ec5",
+      "scheduledCompletion": "2027-02-07",
+      "owner": "grc-sandbox-owner@example.com",
+      "status": "Open"
+    }
+  ]
+}

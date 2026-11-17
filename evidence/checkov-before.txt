@@ -1,0 +1,175 @@
+2026-11-06 17:34:23,171 [MainThread  ] [WARNI]  Failed to get the checkov mappings and guidelines from https://api0.prismacloud.io/bridgecrew/api/v2/guidelines. Skips using BC_* IDs will not work.
+Traceback (most recent call last):
+  File "~/.venvs/checkov/lib/python3.12/site-packages/urllib3/connectionpool.py", line 470, in _make_request
+    self._validate_conn(conn)
+  File "~/.venvs/checkov/lib/python3.12/site-packages/urllib3/connectionpool.py", line 1125, in _validate_conn
+    conn.connect()
+  File "~/.venvs/checkov/lib/python3.12/site-packages/urllib3/connection.py", line 878, in connect
+    wrapped_socket, is_verified = _ssl_wrap_socket_and_match_hostname(
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "~/.venvs/checkov/lib/python3.12/site-packages/urllib3/connection.py", line 1080, in _ssl_wrap_socket_and_match_hostname
+    ssl_sock = ssl_wrap_socket(
+               ^^^^^^^^^^^^^^^^
+  File "~/.venvs/checkov/lib/python3.12/site-packages/urllib3/util/ssl_.py", line 437, in ssl_wrap_socket
+    ssl_sock = _ssl_wrap_socket_impl(sock, context, tls_in_tls, server_hostname)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "~/.venvs/checkov/lib/python3.12/site-packages/urllib3/util/ssl_.py", line 481, in _ssl_wrap_socket_impl
+    return ssl_context.wrap_socket(sock, server_hostname=server_hostname)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/ssl.py", line 455, in wrap_socket
+    return self.sslsocket_class._create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/ssl.py", line 1041, in _create
+    self.do_handshake()
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/ssl.py", line 1319, in do_handshake
+    self._sslobj.do_handshake()
+ssl.SSLCertVerificationError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "~/.venvs/checkov/lib/python3.12/site-packages/urllib3/connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "~/.venvs/checkov/lib/python3.12/site-packages/urllib3/connectionpool.py", line 494, in _make_request
+    raise new_e
+urllib3.exceptions.SSLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "~/.venvs/checkov/lib/python3.12/site-packages/checkov/common/bridgecrew/platform_integration.py", line 1276, in get_public_run_config
+    request = self.http.request("GET", self.guidelines_api_url, headers=headers)  # type:ignore[no-untyped-call]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "~/.venvs/checkov/lib/python3.12/site-packages/urllib3/_request_methods.py", line 135, in request
+    return self.request_encode_url(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "~/.venvs/checkov/lib/python3.12/site-packages/urllib3/_request_methods.py", line 182, in request_encode_url
+    return self.urlopen(method, url, **extra_kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "~/.venvs/checkov/lib/python3.12/site-packages/urllib3/poolmanager.py", line 459, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "~/.venvs/checkov/lib/python3.12/site-packages/urllib3/connectionpool.py", line 886, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "~/.venvs/checkov/lib/python3.12/site-packages/urllib3/connectionpool.py", line 886, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "~/.venvs/checkov/lib/python3.12/site-packages/urllib3/connectionpool.py", line 886, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "~/.venvs/checkov/lib/python3.12/site-packages/urllib3/connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "~/.venvs/checkov/lib/python3.12/site-packages/urllib3/util/retry.py", line 555, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api0.prismacloud.io', port=443): Max retries exceeded with url: /bridgecrew/api/v2/guidelines (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))
+terraform scan results:
+
+Passed checks: 51, Failed checks: 34, Skipped checks: 0
+
+Check: CKV_AZURE_33: "Ensure Storage logging is enabled for Queue service for read, write and delete requests"
+	FAILED for resource: azurerm_storage_account.func_internal
+	File: /03-evidence-store/collector.tf:7-16
+Check: CKV_AZURE_59: "Ensure that Storage accounts disallow public access"
+	FAILED for resource: azurerm_storage_account.func_internal
+	File: /03-evidence-store/collector.tf:7-16
+Check: CKV_AZURE_206: "Ensure that Storage Accounts use replication"
+	FAILED for resource: azurerm_storage_account.func_internal
+	File: /03-evidence-store/collector.tf:7-16
+Check: CKV_AZURE_225: "Ensure the App Service Plan is zone redundant"
+	FAILED for resource: azurerm_service_plan.collectors
+	File: /03-evidence-store/collector.tf:18-25
+Check: CKV_AZURE_212: "Ensure App Service has a minimum number of instances for failover"
+	FAILED for resource: azurerm_service_plan.collectors
+	File: /03-evidence-store/collector.tf:18-25
+Check: CKV_AZURE_221: "Ensure that Azure Function App public network access is disabled"
+	FAILED for resource: azurerm_linux_function_app.collectors
+	File: /03-evidence-store/collector.tf:27-60
+Check: CKV_AZURE_99: "Ensure Cosmos DB accounts have restricted access"
+	FAILED for resource: azurerm_cosmosdb_account.evidence
+	File: /03-evidence-store/main.tf:18-44
+Check: CKV_AZURE_101: "Ensure that Azure Cosmos DB disables public network access"
+	FAILED for resource: azurerm_cosmosdb_account.evidence
+	File: /03-evidence-store/main.tf:18-44
+Check: CKV_AZURE_132: "Ensure cosmosdb does not allow privileged escalation by restricting management plane changes"
+	FAILED for resource: azurerm_cosmosdb_account.evidence
+	File: /03-evidence-store/main.tf:18-44
+Check: CKV_AZURE_100: "Ensure that Cosmos DB accounts have customer-managed keys to encrypt data at rest"
+	FAILED for resource: azurerm_cosmosdb_account.evidence
+	File: /03-evidence-store/main.tf:18-44
+Check: CKV_AZURE_140: "Ensure that Local Authentication is disabled on CosmosDB"
+	FAILED for resource: azurerm_cosmosdb_account.evidence
+	File: /03-evidence-store/main.tf:18-44
+Check: CKV_AZURE_33: "Ensure Storage logging is enabled for Queue service for read, write and delete requests"
+	FAILED for resource: azurerm_storage_account.evidence
+	File: /03-evidence-store/main.tf:91-108
+Check: CKV_AZURE_59: "Ensure that Storage accounts disallow public access"
+	FAILED for resource: azurerm_storage_account.evidence
+	File: /03-evidence-store/main.tf:91-108
+Check: CKV_AZURE_206: "Ensure that Storage Accounts use replication"
+	FAILED for resource: azurerm_storage_account.evidence
+	File: /03-evidence-store/main.tf:91-108
+Check: CKV_AZURE_33: "Ensure Storage logging is enabled for Queue service for read, write and delete requests"
+	FAILED for resource: azurerm_storage_account.func_internal
+	File: /04-reporting/main.tf:24-33
+Check: CKV_AZURE_59: "Ensure that Storage accounts disallow public access"
+	FAILED for resource: azurerm_storage_account.func_internal
+	File: /04-reporting/main.tf:24-33
+Check: CKV_AZURE_206: "Ensure that Storage Accounts use replication"
+	FAILED for resource: azurerm_storage_account.func_internal
+	File: /04-reporting/main.tf:24-33
+Check: CKV_AZURE_225: "Ensure the App Service Plan is zone redundant"
+	FAILED for resource: azurerm_service_plan.reporting
+	File: /04-reporting/main.tf:35-42
+Check: CKV_AZURE_212: "Ensure App Service has a minimum number of instances for failover"
+	FAILED for resource: azurerm_service_plan.reporting
+	File: /04-reporting/main.tf:35-42
+Check: CKV_AZURE_221: "Ensure that Azure Function App public network access is disabled"
+	FAILED for resource: azurerm_linux_function_app.reporting
+	File: /04-reporting/main.tf:44-78
+Check: CKV2_AZURE_41: "Ensure storage account is configured with SAS expiration policy"
+	FAILED for resource: azurerm_storage_account.func_internal
+	File: /03-evidence-store/collector.tf:7-16
+Check: CKV2_AZURE_41: "Ensure storage account is configured with SAS expiration policy"
+	FAILED for resource: azurerm_storage_account.func_internal
+	File: /04-reporting/main.tf:24-33
+Check: CKV2_AZURE_38: "Ensure soft-delete is enabled on Azure storage account"
+	FAILED for resource: azurerm_storage_account.func_internal
+	File: /03-evidence-store/collector.tf:7-16
+Check: CKV2_AZURE_38: "Ensure soft-delete is enabled on Azure storage account"
+	FAILED for resource: azurerm_storage_account.evidence
+	File: /03-evidence-store/main.tf:91-108
+Check: CKV2_AZURE_38: "Ensure soft-delete is enabled on Azure storage account"
+	FAILED for resource: azurerm_storage_account.func_internal
+	File: /04-reporting/main.tf:24-33
+Check: CKV2_AZURE_33: "Ensure storage account is configured with private endpoint"
+	FAILED for resource: azurerm_storage_account.func_internal
+	File: /03-evidence-store/collector.tf:7-16
+Check: CKV2_AZURE_33: "Ensure storage account is configured with private endpoint"
+	FAILED for resource: azurerm_storage_account.evidence
+	File: /03-evidence-store/main.tf:91-108
+Check: CKV2_AZURE_33: "Ensure storage account is configured with private endpoint"
+	FAILED for resource: azurerm_storage_account.func_internal
+	File: /04-reporting/main.tf:24-33
+Check: CKV2_AZURE_40: "Ensure storage account is not configured with Shared Key authorization"
+	FAILED for resource: azurerm_storage_account.func_internal
+	File: /03-evidence-store/collector.tf:7-16
+Check: CKV2_AZURE_40: "Ensure storage account is not configured with Shared Key authorization"
+	FAILED for resource: azurerm_storage_account.func_internal
+	File: /04-reporting/main.tf:24-33
+Check: CKV2_AZURE_1: "Ensure storage for critical data are encrypted with Customer Managed Key"
+	FAILED for resource: azurerm_storage_account.func_internal
+	File: /03-evidence-store/collector.tf:7-16
+Check: CKV2_AZURE_1: "Ensure storage for critical data are encrypted with Customer Managed Key"
+	FAILED for resource: azurerm_storage_account.evidence
+	File: /03-evidence-store/main.tf:91-108
+Check: CKV2_AZURE_1: "Ensure storage for critical data are encrypted with Customer Managed Key"
+	FAILED for resource: azurerm_storage_account.func_internal
+	File: /04-reporting/main.tf:24-33
+Check: CKV2_AZURE_21: "Ensure Storage logging is enabled for Blob service for read requests"
+	FAILED for resource: azurerm_storage_container.reports
+	File: /03-evidence-store/main.tf:110-113
+
