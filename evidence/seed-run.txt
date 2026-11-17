@@ -1,0 +1,65 @@
+
+==> Seeding the FAFO estate into Azure subscription 1 (4211551c-4854-4720-a8c5-d1f3ebcbd9ee), region eastus
+  · owner tag: grc-sandbox-owner@example.com  (override with SEED_OWNER=you@domain)
+
+==> Resource providers
+  ✓ KeyVault, Network, ManagedIdentity registered
+
+==> Resource groups
+  ✓ rg-fafo-prod (tagged env=prod)
+  ✓ rg-fafo-legacy (no env tag — deliberate)
+
+==> Storage accounts
+  ! stfafopub421155: public blob access was REFUSED by your deny-public-blob policy.
+  · That is the control working. Creating it without public access; the TLS and HTTPS findings remain.
+  ✓ stfafopub421155 (HTTP allowed — deliberate; public blob blocked by policy)
+  ✓ stfafologs421155 (untagged, no diagnostics — deliberate)
+  ✓ stfafoarch421155 (hardened — the control sample)
+
+==> Key Vault
+  ✓ kv-fafo-421155 (no purge protection, public network, access policies — deliberate)
+
+==> Network
+  ✓ nsg-fafo-open
+  ✓ nsg-fafo-open rule: 22 + 3389 inbound from Internet — deliberate
+  ✓ vnet-fafo / snet-fafo-app (bound to nsg-fafo-open)
+
+==> App Service
+WARNING: Creating App Service Plan 'plan-fafo-free-eastus' (Linux, SKU: F1).
+ERROR: Operation cannot be completed without additional quota. 
+Additional details - Location:  
+Current Limit (F1 VMs): 0 
+Current Usage: 0
+Amount required for this deployment (F1 VMs): 1 
+(Minimum) New Limit that you should request to enable this deployment: 1. 
+Note that if you experience multiple scaling operations failing (in addition to this one) and need to accommodate the aggregate quota requirements of these operations, you will need to request a higher quota limit than the one currently displayed.
+ERROR: The plan 'plan-fafo-free-eastus' doesn't exist.
+ERROR: (ResourceNotFound) The Resource 'Microsoft.Web/sites/app-fafo-421155' under resource group 'rg-fafo-prod' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix
+Code: ResourceNotFound
+Message: The Resource 'Microsoft.Web/sites/app-fafo-421155' under resource group 'rg-fafo-prod' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix
+
+==> Workload identity
+  ✓ id-fafo-batch
+  ✓ id-fafo-batch granted Contributor on rg-fafo-prod — deliberate
+
+==> Estate seeded. What to expect
+  Defender for Cloud needs an assessment cycle to see new resources (hours on a fresh
+  subscription, see VALIDATION-LOG F6). Policy compliance evaluates within ~15 min,
+  or on demand:
+
+    az policy state trigger-scan --no-wait
+
+  Deliberate findings you should be able to point at by resource ID:
+    rg-fafo-legacy      missing env tag
+    stfafopub421155   public blob (unless policy refused it), HTTP allowed, shared keys
+    stfafologs421155   untagged, no diagnostics (deployIfNotExists should fix this one)
+    kv-fafo-421155     purge protection off, public network, no RBAC
+    nsg-fafo-open    22 + 3389 inbound from Internet
+    app-fafo-421155   HTTPS-only off, FTP allowed, TLS 1.0
+    id-fafo-batch      Contributor at resource-group scope
+
+  Discover it the way your pipeline should — by tag, not by name:
+
+    az resource list --tag purpose=cge-az-capstone-seed -o table
+
+  Tear it all down when the score is back:  ./seed-estate.sh --teardown

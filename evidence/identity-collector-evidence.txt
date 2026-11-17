@@ -1,0 +1,9 @@
+Fri Nov  6 22:40:14 UTC 2026
+collector run: run 7455efa9-e707-4db0-b629-8f2d06db7aed: 13 role assignments at 2026-11-06T22:38:44Z (manual, HTTP 200)
+az role assignment list --all --include-inherited count: 13
+documents in identities: 13
+privileged assignments: 4
+- Contributor | ServicePrincipal | 069a36dd-1e17-4438-81c6-93d66905dace | resourceGroup | /subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-fafo-prod
+- Owner | User | 6fb96b49-6127-40ed-80cd-344126c7e6bb | subscription | /subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee
+- Owner | User | 6fb96b49-6127-40ed-80cd-344126c7e6bb | managementGroup | /providers/Microsoft.Management/managementGroups/mg-grc-sandbox
+- Owner | User | 6fb96b49-6127-40ed-80cd-344126c7e6bb | managementGroup | /providers/Microsoft.Management/managementGroups/mg-grc

@@ -1,0 +1,96 @@
+title:	Drift detected: stages/03-evidence-store (2026-11-06)
+state:	OPEN
+author:	github-actions
+labels:	drift
+comments:	0
+assignees:	
+projects:	
+milestone:	
+issue-type:	
+parent:	
+sub-issues:	
+sub-issues-completed:	
+blocked-by:	
+blocking:	
+number:	9
+--
+Reality no longer matches code. This is a change-management finding that generated itself.
+
+```
+data.terraform_remote_state.foundation: Reading...
+random_string.suffix: Refreshing state... [id=h95r65]
+data.terraform_remote_state.foundation: Read complete after 0s
+data.azurerm_client_config.current: Reading...
+azurerm_service_plan.collectors: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.Web/serverFarms/asp-grc-collectors-dev]
+data.azurerm_client_config.current: Read complete after 0s [id=Y2xpZW50Q29uZmlncy9jbGllbnRJZD01MDY4NDY4NS00MWFkLTQ2OGUtOGU1Mi0wZjQwMjc5YTNhZGQ7b2JqZWN0SWQ9YWVjN2Q4OWYtZTFlYS00ZjQzLTg1MDUtZTE1ODAxNDZjZTQ5O3N1YnNjcmlwdGlvbklkPTQyMTE1NTFjLTQ4NTQtNDcyMC1hOGM1LWQxZjNlYmNiZDllZTt0ZW5hbnRJZD04NjZlZWY2Mi1kODg2LTQyOGMtYThlYS00OTMzNjg2ZGZkYTQ=]
+azurerm_cosmosdb_account.evidence: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-grc-evidence-h95r65]
+azurerm_storage_account.func_internal: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.Storage/storageAccounts/stgrcfunch95r65]
+azurerm_storage_account.evidence: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.Storage/storageAccounts/stgrcevidh95r65]
+azurerm_cosmosdb_sql_role_assignment.deployer_cosmos_write: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-grc-evidence-h95r65/sqlRoleAssignments/497d8a61-d035-d6ba-1367-8f399870cb40]
+azurerm_cosmosdb_sql_database.grc: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-grc-evidence-h95r65/sqlDatabases/grc]
+azurerm_role_assignment.deployer_blob_data: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.Storage/storageAccounts/stgrcevidh95r65/providers/Microsoft.Authorization/roleAssignments/99c16b31-aed4-7d4f-989a-c4f09a78a3c2]
+azurerm_storage_container.reports: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.Storage/storageAccounts/stgrcevidh95r65/blobServices/default/containers/reports]
+azurerm_cosmosdb_sql_container.frameworks: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-grc-evidence-h95r65/sqlDatabases/grc/containers/frameworks]
+azurerm_cosmosdb_sql_container.mappings: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-grc-evidence-h95r65/sqlDatabases/grc/containers/mappings]
+azurerm_cosmosdb_sql_container.assessments: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-grc-evidence-h95r65/sqlDatabases/grc/containers/assessments]
+azurerm_cosmosdb_sql_container.identities: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-grc-evidence-h95r65/sqlDatabases/grc/containers/identities]
+azurerm_storage_container_immutability_policy.reports_worm: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.Storage/storageAccounts/stgrcevidh95r65/blobServices/default/containers/reports/immutabilityPolicies/default]
+azurerm_linux_function_app.collectors: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.Web/sites/func-grc-collectors-h95r65]
+azurerm_cosmosdb_sql_role_assignment.collector_cosmos_write: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-grc-evidence-h95r65/sqlRoleAssignments/11222c23-1e00-eafc-0b24-1c33f6b0a24d]
+azurerm_cosmosdb_sql_role_assignment.collector_cosmos_write_identities: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-grc-evidence-h95r65/sqlRoleAssignments/aec1cfdd-640c-3004-0c2a-ff714229865d]
+azurerm_role_assignment.collector_security_reader: Refreshing state... [id=/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/providers/Microsoft.Authorization/roleAssignments/04b6070f-120d-c7e0-3b41-f68b2db51fae]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  ~ update in-place
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+  # azurerm_cosmosdb_sql_role_assignment.deployer_cosmos_write must be replaced
+-/+ resource "azurerm_cosmosdb_sql_role_assignment" "deployer_cosmos_write" {
+      ~ id                  = "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-grc-evidence-h95r65/sqlRoleAssignments/497d8a61-d035-d6ba-1367-8f399870cb40" -> (known after apply)
+      ~ name                = "497d8a61-d035-d6ba-1367-8f399870cb40" -> (known after apply)
+      ~ principal_id        = "6fb96b49-6127-40ed-80cd-344126c7e6bb" -> "aec7d89f-e1ea-4f43-8505-e1580146ce49" # forces replacement
+        # (4 unchanged attributes hidden)
+    }
+
+  # azurerm_linux_function_app.collectors will be updated in-place
+  ~ resource "azurerm_linux_function_app" "collectors" {
+      ~ app_settings                                   = {
+          + "ENABLE_ORYX_BUILD"              = "true"
+            # (4 unchanged elements hidden)
+        }
+        id                                             = "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.Web/sites/func-grc-collectors-h95r65"
+        name                                           = "func-grc-collectors-h95r65"
+        tags                                           = {
+            "env"     = "dev"
+            "purpose" = "grc-evidence-plane"
+        }
+        # (33 unchanged attributes hidden)
+
+        # (3 unchanged blocks hidden)
+    }
+
+  # azurerm_role_assignment.deployer_blob_data must be replaced
+-/+ resource "azurerm_role_assignment" "deployer_blob_data" {
+      + condition_version                      = (known after apply)
+      ~ id                                     = "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourceGroups/rg-grc-evidence-dev/providers/Microsoft.Storage/storageAccounts/stgrcevidh95r65/providers/Microsoft.Authorization/roleAssignments/99c16b31-aed4-7d4f-989a-c4f09a78a3c2" -> (known after apply)
+      ~ name                                   = "99c16b31-aed4-7d4f-989a-c4f09a78a3c2" -> (known after apply)
+      ~ principal_id                           = "6fb96b49-6127-40ed-80cd-344126c7e6bb" -> "aec7d89f-e1ea-4f43-8505-e1580146ce49" # forces replacement
+      ~ principal_type                         = "User" -> (known after apply)
+      ~ role_definition_id                     = "/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/providers/Microsoft.Authorization/roleDefinitions/ba92f5b4-2d11-453d-a403-e96b0029c9fe" -> (known after apply)
+      + skip_service_principal_aad_check       = (known after apply)
+        # (5 unchanged attributes hidden)
+    }
+
+Plan: 2 to add, 1 to change, 2 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: drift.plan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "drift.plan"
+
+```

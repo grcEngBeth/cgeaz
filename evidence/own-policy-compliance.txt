@@ -1,0 +1,11 @@
+Fri Nov  6 00:10:13 UTC 2026
+Resource                                                                                                                                            State         Time
+--------------------------------------------------------------------------------------------------------------------------------------------------  ------------  --------------------------------
+/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-tfstate/providers/microsoft.storage/storageaccounts/stgrctfstate4211551c  Compliant     2026-11-06T00:05:30.479215+00:00
+/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-sandbox-dev/providers/microsoft.storage/storageaccounts/stgrcseed18321    Compliant     2026-11-06T00:05:30.102143+00:00
+/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.storage/storageaccounts/stgrcrpt5i5qga   Compliant     2026-11-06T00:05:29.809506+00:00
+/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.storage/storageaccounts/stgrcfunch95r65  Compliant     2026-11-06T00:05:29.722855+00:00
+/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-grc-evidence-dev/providers/microsoft.storage/storageaccounts/stgrcevidh95r65  Compliant     2026-11-06T00:05:29.493244+00:00
+/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-fafo-prod/providers/microsoft.storage/storageaccounts/stfafopub421155         NonCompliant  2026-11-06T00:05:29.172502+00:00
+/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-fafo-prod/providers/microsoft.storage/storageaccounts/stfafoarch421155        Compliant     2026-11-06T00:05:29.019984+00:00
+/subscriptions/4211551c-4854-4720-a8c5-d1f3ebcbd9ee/resourcegroups/rg-fafo-legacy/providers/microsoft.storage/storageaccounts/stfafologs421155      Compliant     2026-11-06T00:05:28.887367+00:00

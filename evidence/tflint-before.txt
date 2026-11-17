@@ -1,0 +1,12 @@
+10 issue(s) found:
+
+stages/04-reporting/main.tf:24:1: Warning - Resource is missing lifecycle { prevent_destroy = true }. This resource contains data that should be protected from accidental deletion. (azurerm_resources_missing_prevent_destroy)
+stages/03-evidence-store/main.tf:18:1: Warning - Resource is missing lifecycle { prevent_destroy = true }. This resource contains data that should be protected from accidental deletion. (azurerm_resources_missing_prevent_destroy)
+stages/03-evidence-store/main.tf:53:1: Warning - Resource is missing lifecycle { prevent_destroy = true }. This resource contains data that should be protected from accidental deletion. (azurerm_resources_missing_prevent_destroy)
+stages/03-evidence-store/main.tf:63:1: Warning - Resource is missing lifecycle { prevent_destroy = true }. This resource contains data that should be protected from accidental deletion. (azurerm_resources_missing_prevent_destroy)
+stages/03-evidence-store/main.tf:72:1: Warning - Resource is missing lifecycle { prevent_destroy = true }. This resource contains data that should be protected from accidental deletion. (azurerm_resources_missing_prevent_destroy)
+stages/03-evidence-store/main.tf:81:1: Warning - Resource is missing lifecycle { prevent_destroy = true }. This resource contains data that should be protected from accidental deletion. (azurerm_resources_missing_prevent_destroy)
+stages/03-evidence-store/main.tf:46:1: Warning - Resource is missing lifecycle { prevent_destroy = true }. This resource contains data that should be protected from accidental deletion. (azurerm_resources_missing_prevent_destroy)
+stages/03-evidence-store/collector.tf:7:1: Warning - Resource is missing lifecycle { prevent_destroy = true }. This resource contains data that should be protected from accidental deletion. (azurerm_resources_missing_prevent_destroy)
+stages/03-evidence-store/main.tf:91:1: Warning - Resource is missing lifecycle { prevent_destroy = true }. This resource contains data that should be protected from accidental deletion. (azurerm_resources_missing_prevent_destroy)
+stages/03-evidence-store/main.tf:110:1: Warning - Resource is missing lifecycle { prevent_destroy = true }. This resource contains data that should be protected from accidental deletion. (azurerm_resources_missing_prevent_destroy)
